@@ -126,6 +126,13 @@
       justify-content: space-between;
       gap: 60px;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-image {
+      position: relative;
+      z-index: 3;   /* makes sure image is on top */
     }
     
     .hero-image img {
@@ -164,9 +171,9 @@
 
     /* Floating stat cards */
     .hero-stats {
-      position: absolute; right: 48px; top: 50%;
+      position: absolute; right: 0; top: 55%;
       transform: translateY(-50%);
-      display: flex; flex-direction: column; gap: 16px;
+      display: flex; flex-direction: column; gap: 16px; z-index: 1; 
     }
     .stat-card {
       background: var(--surface); border: 1px solid var(--border);
