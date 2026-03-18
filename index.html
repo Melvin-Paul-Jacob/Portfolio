@@ -469,6 +469,98 @@
       background: var(--surface2);
       letter-spacing: 0.06em;
     }
+
+    /* COMPETITIONS / WINS */
+    .comp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    
+    .comp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: none;
+      position: relative;
+    }
+    
+    .comp-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: var(--glow);
+    }
+    
+    /* Featured cards (bigger ones) */
+    .comp-card.featured {
+      grid-column: span 2;
+    }
+    
+    @media (max-width: 768px) {
+      .comp-card.featured {
+        grid-column: span 1;
+      }
+    }
+    
+    .comp-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .comp-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      filter: brightness(0.8) saturate(0.8);
+      transition: 0.4s ease;
+    }
+    
+    .comp-card:hover .comp-img {
+      filter: brightness(1) saturate(1);
+      transform: scale(1.05);
+    }
+    
+    .comp-body {
+      padding: 20px;
+    }
+    
+    .comp-event {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    
+    .comp-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    
+    /* Badge */
+    .comp-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 12px;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      backdrop-filter: blur(6px);
+    }
+    
+    .comp-badge.gold {
+      background: rgba(255, 215, 0, 0.15);
+      border: 1px solid gold;
+      color: gold;
+    }
+    
+    .comp-badge.silver {
+      background: rgba(200, 200, 200, 0.15);
+      border: 1px solid #ccc;
+      color: #ddd;
+    }
   </style>
 </head>
 <body>
