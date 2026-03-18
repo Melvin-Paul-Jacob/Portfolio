@@ -9,16 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #070b12;
-      --surface: #0d1420;
-      --surface2: #111a28;
-      --border: rgba(0, 200, 255, 0.12);
-      --accent: #00c8ff;
-      --accent2: #ff5e5b;
-      --accent3: #00ff9d;
-      --text: #e8f0fe;
-      --muted: #5c7a9e;
-      --glow: 0 0 24px rgba(0, 200, 255, 0.25);
+      --bg: #f7f4ef;              /* warm off-white */
+      --surface: #ffffff;        /* cards */
+      --surface2: #f1ebe3;       /* subtle contrast layer */
+      --border: rgba(180, 140, 90, 0.2);
+      --accent: #c97b2a;         /* warm amber */
+      --accent2: #b85c38;        /* terracotta */
+      --accent3: #6a994e;        /* olive green */
+      --text: #2b2b2b;           /* dark warm gray */
+      --muted: #7a6f63;          /* softer brown-gray */
+      --glow: 0 0 18px rgba(201, 123, 42, 0.25);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,9 +37,8 @@
       content: '';
       position: fixed; inset: 0;
       background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 48px 48px;
+        radial-gradient(rgba(180,140,90,0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
       pointer-events: none;
       z-index: 0;
     }
@@ -94,7 +93,7 @@
     .hero-name span { color: var(--accent); }
     .hero-title {
       font-size: clamp(0.85rem, 2vw, 1.1rem);
-      color: var(--muted); max-width: 600px;
+      color: #1f1f1f; max-width: 600px;
       line-height: 1.8; margin-bottom: 48px;
     }
     .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -107,12 +106,12 @@
       transition: all 0.25s;
     }
     .btn-primary {
-      background: var(--accent); color: #000; font-weight: 700;
+      background: var(--accent); color: #fff;
     }
-    .btn-primary:hover { background: #fff; box-shadow: var(--glow); }
+    .btn-primary:hover { background: #a86422; box-shadow: var(--glow); }
     .btn-outline {
       background: transparent; color: var(--text);
-      border: 1px solid var(--border);
+     border: 1px solid rgba(180,140,90,0.3);
     }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -189,15 +188,15 @@
       padding: 0;              /* remove extra space */
       overflow: hidden; 
     
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(14px);
     
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(200, 160, 120, 0.25);
     
       box-shadow:
-        0 10px 40px rgba(0,0,0,0.5),
-        0 0 30px rgba(0,200,255,0.12);
+        0 10px 30px rgba(0,0,0,0.08),
+        0 0 20px rgba(201,123,42,0.1);
     
       transition: transform 0.35s ease, box-shadow 0.35s ease;
       will-change: transform;
@@ -324,10 +323,10 @@
       font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700;
       margin-bottom: 4px;
     }
-    .timeline-role { font-size: 0.8rem; color: var(--muted); margin-bottom: 16px; }
+    .timeline-role { font-size: 0.8rem; color: #1f1f1f; margin-bottom: 16px; }
     .timeline-bullets { list-style: none; }
     .timeline-bullets li {
-      font-size: 0.8rem; color: var(--muted); line-height: 1.7;
+      font-size: 0.8rem; color: #1f1f1f; line-height: 1.7;
       padding-left: 16px; position: relative; margin-bottom: 4px;
     }
     .timeline-bullets li::before {
@@ -373,7 +372,7 @@
       font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
       margin-bottom: 8px;
     }
-    .project-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; margin-top: auto;}
+    .project-desc { font-size: 0.78rem; color: #1f1f1f; line-height: 1.7; margin-top: auto;}
 
     /* Publications */
     #publications .pub-list { display: flex; flex-direction: column; gap: 20px; }
@@ -486,8 +485,11 @@
       content: '';
       position: fixed; inset: 0;
       background: repeating-linear-gradient(
-        0deg, transparent, transparent 2px,
-        rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.015) 3px,
+        rgba(0,0,0,0.015) 6px
       );
       pointer-events: none; z-index: 999;
     }
