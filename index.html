@@ -561,6 +561,39 @@
       border: 1px solid #ccc;
       color: #ddd;
     }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    
+    #lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+    }
+    
+    #lightbox-caption {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    
+    #lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -574,6 +607,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#competitions">Awards</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#publications">Publications</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -1067,12 +1101,13 @@
     cursor.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
     ring.style.transform = `translate(${e.clientX - 18}px, ${e.clientY - 18}px)`;
   });
-  document.querySelectorAll('a, button, .project-card, .skill-pill').forEach(el => {
+  document.querySelectorAll('a, button, .project-card, .skill-pill, .comp-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursor.style.transform += ' scale(2)';
+      cursor.style.transform = cursor.style.transform + ' scale(2)';
       cursor.style.background = '#fff';
     });
     el.addEventListener('mouseleave', () => {
+      cursor.style.transform = cursor.style.transform.replace(' scale(2)', '');
       cursor.style.background = 'var(--accent)';
     });
   });
@@ -1092,7 +1127,7 @@
     });
   }, { threshold: 0.15 });
 
-  document.querySelectorAll('.fade-in, .timeline-item, .project-card').forEach(el => {
+  document.querySelectorAll('.fade-in, .timeline-item, .project-card, .comp-card').forEach(el => {
     observer.observe(el);
   });
 
@@ -1122,6 +1157,42 @@
     });
     navLinks.forEach(a => {
       a.style.color = a.getAttribute('href') === `#${cur}` ? 'var(--accent)' : '';
+    });
+  });
+
+  // Lightbox
+  function openLightbox(src, caption) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  
+  // Close on background click
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+  
+  // ESC close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+  
+  // Attach to images ONLY
+  document.querySelectorAll('.comp-card img').forEach(img => {
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = img.closest('.comp-card');
+      const caption =
+        card.dataset.caption ||
+        card.querySelector('.comp-event')?.textContent ||
+        '';
+      openLightbox(img.src, caption);
     });
   });
 </script>
