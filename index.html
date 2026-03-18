@@ -214,6 +214,34 @@
     .skill-bar-fill.green { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
     .skill-bar-fill.red { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
 
+    .profile-wrap {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 12px;
+      position: relative;
+    }
+    
+    .profile-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+      transition: 0.4s ease;
+    }
+    
+    .profile-wrap:hover .profile-img {
+      filter: grayscale(0%) contrast(1.1);
+    }
+
+    .profile-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--accent);
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
     /* Awards banner */
     .awards-strip {
       background: var(--surface);
@@ -690,31 +718,8 @@
       <p>I hold a <strong>Master's in Autonomous Systems</strong> from Bonn-Rhein-Sieg University of Applied Sciences and have published at <strong>IROS</strong> and <strong>RoboCup Symposium</strong> through research at the University of Bonn.</p>
       <p>Outside algorithms, I care about robots that work in the <em>real world</em> — messy, ambiguous, uncontrolled environments where clever engineering beats brute compute.</p>
     </div>
-    <div class="skills-panel fade-in">
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-label"><span>Computer Vision</span><span>95%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div>
-      </div>
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-label"><span>Deep Learning / PyTorch</span><span>90%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
-      </div>
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-label"><span>3D Vision & Point Clouds</span><span>85%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill green" data-width="85"></div></div>
-      </div>
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-label"><span>Robotics & ROS</span><span>80%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill green" data-width="80"></div></div>
-      </div>
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-label"><span>Edge Computing (Jetson)</span><span>78%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill red" data-width="78"></div></div>
-      </div>
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-label"><span>Team Leadership</span><span>85%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill red" data-width="85"></div></div>
-      </div>
+    <div class="profile-wrap fade-in">
+      <img src="images/1757662096392.png" alt="Melvin Paul Jacob" class="profile-img">
     </div>
   </div>
 </section>
