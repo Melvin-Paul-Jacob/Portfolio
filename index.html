@@ -228,7 +228,7 @@
       border-radius: 10px;
     
       filter: grayscale(20%) contrast(1.05);
-      transition: 0.4s ease;
+      transition: transform 0.4s ease;
     }
     
     .profile-wrap:hover .profile-img {
@@ -260,8 +260,11 @@
         0 0 30px rgba(0,200,255,0.12);
     
       overflow: hidden;
-      transition: all 0.35s ease;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
       will-change: transform;
+      max-width: 280px;   /* adjust: 260–360px depending on your layout */
+      margin: 0 auto;
+      
     }
     
     /* glowing edge */
@@ -310,10 +313,10 @@
     
     /* hover effect */
     .profile-crystal:hover {
-      transform: translateY(-6px);
+      transform: translateY(-10px) scale(1.03) rotateX(3deg) rotateY(-3deg);
       box-shadow:
-        0 20px 60px rgba(0,0,0,0.6),
-        0 0 40px rgba(0,200,255,0.25);
+        0 25px 70px rgba(0,0,0,0.6),
+        0 0 50px rgba(0,200,255,0.25);
     }
 
     /* Awards banner */
