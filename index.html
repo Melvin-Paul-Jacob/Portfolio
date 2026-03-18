@@ -484,6 +484,14 @@
       transition: all 0.3s ease;
       cursor: none;
       position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+    }
+
+    .comp-card.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     
     .comp-card:hover {
