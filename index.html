@@ -20,6 +20,9 @@
       --text: #2b2b2b;           /* dark warm gray */
       --muted: #7a6f63;          /* softer brown-gray */
       --glow: 0 0 18px rgba(201, 123, 42, 0.25);
+      --skill-1: #3a86ff;  /* refined blue */
+      --skill-2: #c44536;  /* deep terracotta-red */
+      --skill-3: #7b61ff;  /* elegant purple */
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -427,12 +430,21 @@
       border-color: var(--accent); color: var(--text);
       background: rgba(0, 200, 255, 0.07);
     }
-    .skill-pill.cat-cv { --c: var(--accent); }
-    .skill-pill.cat-ml { --c: var(--accent2); }
-    .skill-pill.cat-rob { --c: var(--accent3); }
-    .skill-pill.cat-cv:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,200,255,0.07); }
-    .skill-pill.cat-ml:hover { border-color: var(--accent2); color: var(--accent2); background: rgba(255,94,91,0.07); }
-    .skill-pill.cat-rob:hover { border-color: var(--accent3); color: var(--accent3); background: rgba(0,0,0,0.04); }
+    .skill-pill.cat-cv { 
+      border-color: var(--skill-1);
+      color: var(--skill-1);
+    }
+    .skill-pill.cat-ml { 
+      border-color: var(--skill-2);
+      color: var(--skill-2);
+    }
+    .skill-pill.cat-rob { 
+      border-color: var(--skill-3);
+      color: var(--skill-3);
+    }
+    .skill-pill.cat-cv:hover { border-color: var(--accent); color: var(--accent); background: var(--skill-1); }
+    .skill-pill.cat-ml:hover { border-color: var(--accent2); color: var(--accent2); background: var(--skill-2); }
+    .skill-pill.cat-rob:hover { border-color: var(--accent3); color: var(--accent3); background: var(--skill-3); }
     .skills-legend { display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
     .legend-dot {
       width: 8px; height: 8px; border-radius: 50%;
