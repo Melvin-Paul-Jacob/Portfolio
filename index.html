@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melvin Paul Jacob — CV/ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b12;
+      --surface: #0d1420;
+      --surface2: #111a28;
+      --border: rgba(0, 200, 255, 0.12);
+      --accent: #00c8ff;
+      --accent2: #ff5e5b;
+      --accent3: #00ff9d;
+      --text: #e8f0fe;
+      --muted: #5c7a9e;
+      --glow: 0 0 24px rgba(0, 200, 255, 0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    #cursor {
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.35s ease, opacity 0.2s;
+      opacity: 0.5;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 48px;
+      background: rgba(7, 11, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* Hero */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative; z-index: 1;
+    }
+    .hero-tag {
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--accent3); margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-tag::before {
+      content: ''; display: block;
+      width: 32px; height: 1px; background: var(--accent3);
+    }
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 800; line-height: 0.92;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+    .hero-name span { color: var(--accent); }
+    .hero-title {
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      color: var(--muted); max-width: 600px;
+      line-height: 1.8; margin-bottom: 48px;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      padding: 14px 28px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      border: none; cursor: none; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.25s;
+    }
+    .btn-primary {
+      background: var(--accent); color: #000; font-weight: 700;
+    }
+    .btn-primary:hover { background: #fff; box-shadow: var(--glow); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Floating stat cards */
+    .hero-stats {
+      position: absolute; right: 48px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 20px 28px; width: 200px;
+      animation: float 4s ease-in-out infinite;
+    }
+    .stat-card:nth-child(2) { animation-delay: 1s; margin-left: 24px; }
+    .stat-card:nth-child(3) { animation-delay: 2s; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem; font-weight: 800;
+      color: var(--accent); line-height: 1;
+    }
+    .stat-label { font-size: 0.65rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Section base */
+    section {
+      padding: 100px 48px;
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; max-width: 60px;
+      height: 1px; background: var(--accent);
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800; line-height: 1;
+      letter-spacing: -0.03em; margin-bottom: 60px;
+    }
+
+    /* About */
+    #about .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    }
+    .about-text p {
+      color: var(--muted); line-height: 1.9; font-size: 0.88rem;
+      margin-bottom: 16px;
+    }
+    .about-text p strong { color: var(--text); }
+    .skills-panel { display: flex; flex-direction: column; gap: 20px; }
+    .skill-bar-wrap {}
+    .skill-bar-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.72rem; margin-bottom: 8px; color: var(--muted);
+    }
+    .skill-bar-label span:first-child { color: var(--text); }
+    .skill-bar-bg {
+      height: 3px; background: var(--surface2);
+      position: relative; overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%; background: var(--accent);
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .skill-bar-fill.green { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
+    .skill-bar-fill.red { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
+
+    /* Awards banner */
+    .awards-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+      overflow: hidden;
+      position: relative; z-index: 1;
+      margin: 0 0 0 0;
+    }
+    .awards-track {
+      display: flex; gap: 64px;
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+    .award-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); flex-shrink: 0;
+    }
+    .award-item .trophy { font-size: 1.1rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Experience timeline */
+    #experience .timeline { position: relative; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item {
+      padding-left: 40px; margin-bottom: 56px;
+      position: relative;
+      opacity: 0; transform: translateX(-20px);
+      transition: all 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-dot {
+      position: absolute; left: -5px; top: 6px;
+      width: 10px; height: 10px;
+      background: var(--bg); border: 2px solid var(--accent);
+      border-radius: 50%;
+    }
+    .timeline-dot.active { background: var(--accent); box-shadow: var(--glow); }
+    .timeline-period {
+      font-size: 0.65rem; color: var(--accent); letter-spacing: 0.15em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .timeline-company {
+      font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .timeline-role { font-size: 0.8rem; color: var(--muted); margin-bottom: 16px; }
+    .timeline-bullets { list-style: none; }
+    .timeline-bullets li {
+      font-size: 0.8rem; color: var(--muted); line-height: 1.7;
+      padding-left: 16px; position: relative; margin-bottom: 4px;
+    }
+    .timeline-bullets li::before {
+      content: '›'; position: absolute; left: 0;
+      color: var(--accent);
+    }
+
+    /* Projects */
+    #projects .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      opacity: 0; transform: translateY(20px);
+      cursor: none;
+    }
+    .project-card.visible { opacity: 1; transform: translateY(0); }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-img {
+      width: 100%; height: 200px; object-fit: cover;
+      display: block; filter: saturate(0.7) brightness(0.8);
+      transition: filter 0.4s;
+    }
+    .project-card:hover .project-img { filter: saturate(1) brightness(0.95); }
+    .project-body { padding: 24px; }
+    .project-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag {
+      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .tag.accent { border-color: var(--accent); color: var(--accent); }
+    .tag.green { border-color: var(--accent3); color: var(--accent3); }
+    .project-name {
+      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .project-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+
+    /* Publications */
+    #publications .pub-list { display: flex; flex-direction: column; gap: 20px; }
+    .pub-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 28px; display: grid; grid-template-columns: auto 1fr; gap: 24px;
+      align-items: start;
+      transition: border-color 0.3s;
+    }
+    .pub-card:hover { border-color: var(--accent3); }
+    .pub-year {
+      font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800;
+      color: var(--accent3); writing-mode: vertical-rl; text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+    .pub-title {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .pub-venue { font-size: 0.72rem; color: var(--accent); margin-bottom: 8px; }
+    .pub-abstract { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+
+    /* Skills section */
+    #skills .skills-cloud {
+      display: flex; flex-wrap: wrap; gap: 12px;
+    }
+    .skill-pill {
+      padding: 8px 20px;
+      border: 1px solid var(--border);
+      font-size: 0.72rem; letter-spacing: 0.08em;
+      color: var(--muted);
+      transition: all 0.2s;
+      cursor: none;
+    }
+    .skill-pill:hover {
+      border-color: var(--accent); color: var(--text);
+      background: rgba(0, 200, 255, 0.07);
+    }
+    .skill-pill.cat-cv { --c: var(--accent); }
+    .skill-pill.cat-ml { --c: var(--accent2); }
+    .skill-pill.cat-rob { --c: var(--accent3); }
+    .skill-pill.cat-cv:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,200,255,0.07); }
+    .skill-pill.cat-ml:hover { border-color: var(--accent2); color: var(--accent2); background: rgba(255,94,91,0.07); }
+    .skill-pill.cat-rob:hover { border-color: var(--accent3); color: var(--accent3); background: rgba(0,255,157,0.07); }
+    .skills-legend { display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+    .legend-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      display: inline-block; margin-right: 8px;
+    }
+    .legend-item { font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; }
+
+    /* Education */
+    #education .edu-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .edu-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 28px; position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .edu-card:hover { border-color: var(--accent); }
+    .edu-card::before {
+      content: attr(data-degree);
+      position: absolute; right: -10px; top: 16px;
+      font-family: 'Syne', sans-serif; font-size: 5rem; font-weight: 800;
+      color: rgba(0, 200, 255, 0.04); line-height: 1; pointer-events: none;
+    }
+    .edu-degree {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .edu-school { font-size: 0.78rem; color: var(--accent); margin-bottom: 4px; }
+    .edu-period { font-size: 0.7rem; color: var(--muted); margin-bottom: 12px; }
+    .edu-cgpa {
+      display: inline-block;
+      padding: 4px 12px;
+      border: 1px solid var(--accent3); color: var(--accent3);
+      font-size: 0.68rem; letter-spacing: 0.1em;
+    }
+
+    /* Contact */
+    #contact {
+      text-align: center; max-width: 700px; margin: 0 auto; padding: 100px 48px;
+    }
+    #contact .section-label { justify-content: center; }
+    #contact .section-label::after { display: none; }
+    #contact .section-title { text-align: center; }
+    #contact .contact-sub {
+      color: var(--muted); font-size: 0.85rem; line-height: 1.8;
+      margin-bottom: 48px;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em;
+      position: relative; z-index: 1;
+    }
+
+    /* Scroll animations */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Scan line effect */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px
+      );
+      pointer-events: none; z-index: 999;
+    }
+
+    /* Accent line decoration */
+    .accent-line {
+      width: 60px; height: 3px; background: var(--accent);
+      margin-bottom: 32px;
+      box-shadow: var(--glow);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      #hero { padding: 100px 24px 60px; }
+      .hero-stats { display: none; }
+      section { padding: 70px 24px; }
+      #about .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* Glitch on hover for name */
+    .hero-name:hover .glitch {
+      animation: glitch 0.4s steps(2) forwards;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 var(--accent2), -2px 0 var(--accent3); }
+      33% { text-shadow: -2px 0 var(--accent2), 2px 0 var(--accent3); }
+      66% { text-shadow: 2px 2px var(--accent2), -2px -2px var(--accent3); }
+      100% { text-shadow: none; }
+    }
+
+    /* Tooltip for images */
+    .img-caption {
+      font-size: 0.65rem; color: var(--muted);
+      text-align: center; padding: 8px;
+      background: var(--surface2);
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MPJ_</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">AI · Robotics · Computer Vision</div>
+  <h1 class="hero-name">
+    <span class="glitch">Melvin</span><br>
+    Paul<br>
+    <span>Jacob</span>
+  </h1>
+  <p class="hero-title">
+    ML Engineer building perception systems for robots, drones, and autonomous machines.<br>
+    4.5 years turning camera feeds into decisions — from pepper farms to military airspace.
+  </p>
+  <div class="hero-ctas">
+    <a href="mailto:melvinpaul123@gmail.com" class="btn btn-primary">↗ Get in Touch</a>
+    <a href="https://www.linkedin.com/in/melvin-pauljacob" target="_blank" class="btn btn-outline">LinkedIn</a>
+    <a href="https://github.com/melvinpaul123" target="_blank" class="btn btn-outline">GitHub</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">4.5</div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1st</div>
+      <div class="stat-label">European Robotics League</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2</div>
+      <div class="stat-label">IEEE Publications</div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS STRIP -->
+<div class="awards-strip">
+  <div class="awards-track" id="awardsTrack">
+    <span class="award-item"><span class="trophy">🏆</span> 1st Place · European Robotics League 2023</span>
+    <span class="award-item"><span class="trophy">🥈</span> 2nd Place · Heart-MET Competition ICRA 2023</span>
+    <span class="award-item"><span class="trophy">📄</span> IROS 2024 Publication · HortiBot</span>
+    <span class="award-item"><span class="trophy">📄</span> RoboCup Symposium 2024 · Robot Placement</span>
+    <span class="award-item"><span class="trophy">🤖</span> Bit-bots · University of Bonn Robotics Team</span>
+    <span class="award-item"><span class="trophy">🏆</span> 1st Place · European Robotics League 2023</span>
+    <span class="award-item"><span class="trophy">🥈</span> 2nd Place · Heart-MET Competition ICRA 2023</span>
+    <span class="award-item"><span class="trophy">📄</span> IROS 2024 Publication · HortiBot</span>
+    <span class="award-item"><span class="trophy">📄</span> RoboCup Symposium 2024 · Robot Placement</span>
+    <span class="award-item"><span class="trophy">🤖</span> Bit-bots · University of Bonn Robotics Team</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 // About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p>I'm a <strong>Computer Vision and ML Engineer</strong> with 4.5 years of experience building perception and intelligence systems for real-world robots and autonomous machines.</p>
+      <p>My work spans <strong>commercial, industrial, and military domains</strong> — from training panoptic segmentation models for warehouse digital twins at KION Group, to leading an 8-person team building a counter-drone system for the Indian military at Astr Defence.</p>
+      <p>I hold a <strong>Master's in Autonomous Systems</strong> from Bonn-Rhein-Sieg University of Applied Sciences and have published at <strong>IROS</strong> and <strong>RoboCup Symposium</strong> through research at the University of Bonn.</p>
+      <p>Outside algorithms, I care about robots that work in the <em>real world</em> — messy, ambiguous, uncontrolled environments where clever engineering beats brute compute.</p>
+    </div>
+    <div class="skills-panel fade-in">
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Computer Vision</span><span>95%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Deep Learning / PyTorch</span><span>90%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>3D Vision & Point Clouds</span><span>85%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill green" data-width="85"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Robotics & ROS</span><span>80%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill green" data-width="80"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Edge Computing (Jetson)</span><span>78%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill red" data-width="78"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Team Leadership</span><span>85%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill red" data-width="85"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="max-width:1200px;margin:0 auto;">
+  <div class="section-label">02 // Experience</div>
+  <h2 class="section-title">Where I've Worked</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-period">Apr 2025 — Present</div>
+      <div class="timeline-company">KION Group (KION India Pvt. Ltd.)</div>
+      <div class="timeline-role">AI Engineer · Pune, Maharashtra, India</div>
+      <ul class="timeline-bullets">
+        <li>Designing and developing state-of-the-art 3D panoptic segmentation models for warehouse environments.</li>
+        <li>Building an automated AI pipeline to generate digital twins of warehouses using computer vision.</li>
+        <li>Creating structured, well-documented codebases for seamless integration and deployment.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Sep 2024 — Mar 2025</div>
+      <div class="timeline-company">Astr Defence Pvt. Ltd.</div>
+      <div class="timeline-role">Sr. Computer Vision & ML Engineer · Karnataka, India</div>
+      <ul class="timeline-bullets">
+        <li>Led a team of 8 engineers to develop an edge-based hard-kill Counter-UAV system for the Indian military.</li>
+        <li>Designed the complete software stack for 3D localization, detection, tracking, and trajectory prediction of aerial targets.</li>
+        <li>Supervised electronics system development and ensured seamless integration with the software stack.</li>
+        <li>Managed project planning, component procurement, team recruitment and mentoring.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jun 2023 — Mar 2024</div>
+      <div class="timeline-company">University of Bonn</div>
+      <div class="timeline-role">ML Research Assistant · Bonn, Germany</div>
+      <ul class="timeline-bullets">
+        <li>Developed and deployed a state-of-the-art object detection algorithm for active perception in horticulture robotics.</li>
+        <li>Implemented and trained semantic, instance and panoptic networks for real-time perception of peppers, peduncles and stems for collision-aware trajectory generation.</li>
+        <li>Co-authored and published results at IEEE/RSJ IROS (International Conference on Intelligent Robots and Systems).</li>
+        <li>Part of the PhenoRob project: sustainable crop production using robotics.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Sep 2022 — Sep 2023 (Consultant) · Aug 2021 — Feb 2022 (Full-time) · May–Jul 2021 (Intern)</div>
+      <div class="timeline-company">Sastra Robotics India Pvt. Ltd.</div>
+      <div class="timeline-role">Computer Vision & ML Engineer · Kerala, India</div>
+      <ul class="timeline-bullets">
+        <li>Implemented highly customizable robot-aided testing solutions using computer vision and deep learning, integrable into any existing testing framework.</li>
+        <li>Created adaptive algorithms for various test scenarios.</li>
+        <li>Key projects: QUACO, EMV Robotic Testing Platform.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="max-width:1200px;margin:0 auto;">
+  <div class="section-label">03 // Projects</div>
+  <h2 class="section-title">Notable Work</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <img class="project-img" src="https://images.unsplash.com/photo-1625314897518-bb4fe6e95229?w=600&q=80" alt="Counter-UAV System" />
+      <div class="img-caption">Edge-based Counter-UAV System</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag accent">Defence</span>
+          <span class="tag">3D Tracking</span>
+          <span class="tag">Edge AI</span>
+        </div>
+        <div class="project-name">Hard-Kill Counter-UAV System</div>
+        <p class="project-desc">Led an 8-person team to build a military-grade counter-drone system with 3D localization, detection, tracking, and trajectory prediction of aerial targets — deployed on edge hardware.</p>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&q=80" alt="HortiBot" />
+      <div class="img-caption">HortiBot — Robotic Pepper Harvesting</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag green">Research</span>
+          <span class="tag">Panoptic Seg.</span>
+          <span class="tag">IROS 2024</span>
+        </div>
+        <div class="project-name">HortiBot — Robotic Horticulture</div>
+        <p class="project-desc">Adaptive multi-arm system for robotic sweet pepper harvesting. Trained semantic, instance, and panoptic segmentation networks for real-time detection of peppers, peduncles, and stems. Published at IROS.</p>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&q=80" alt="Digital Twin Warehouse" />
+      <div class="img-caption">Warehouse Digital Twin Pipeline</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag accent">Current</span>
+          <span class="tag">3D Vision</span>
+          <span class="tag">Digital Twin</span>
+        </div>
+        <div class="project-name">Automated Warehouse Digital Twin</div>
+        <p class="project-desc">Developing an AI pipeline at KION Group that automatically generates accurate 3D digital twins of warehouse environments using 3D panoptic segmentation from sensor data.</p>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="PilotNet" />
+      <div class="img-caption">PilotNet — Self-Driving Steering Prediction</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">CNN</span>
+          <span class="tag">Autonomous Driving</span>
+        </div>
+        <div class="project-name">PilotNet (NVIDIA)</div>
+        <p class="project-desc">Implementation and optimization of NVIDIA's PilotNet CNN for real-time steering angle prediction for self-driving cars, optimized to run on CPU with minimal accuracy loss.</p>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&q=80" alt="Emotion-Aware Agent" />
+      <div class="img-caption">Multimodal Emotion-Aware Conversational Agent</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">NLP</span>
+          <span class="tag">HRI</span>
+          <span class="tag green">Research</span>
+        </div>
+        <div class="project-name">Emotion-Aware Conversational Agent</div>
+        <p class="project-desc">Developed empathetic conversational agents examining the impact of emotional intelligence on human-agent interaction, measuring trust, empathy, usefulness, and social presence.</p>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img class="project-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80" alt="Assistive Robot" />
+      <div class="img-caption">Socially Acceptable Assistive Humanoid</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">Speech Recognition</span>
+          <span class="tag">Navigation</span>
+          <span class="tag">HRI</span>
+        </div>
+        <div class="project-name">Physically Assistive Humanoid Robot</div>
+        <p class="project-desc">A humanoid robot capable of fetching items in home environments using speech & gesture recognition, autonomous navigation, object manipulation, and safe physical human-robot collaboration.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications" style="max-width:1200px;margin:0 auto;">
+  <div class="section-label">04 // Publications</div>
+  <h2 class="section-title">Research Output</h2>
+  <div class="pub-list">
+
+    <div class="pub-card fade-in">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title">Planning Robot Placement for Object Grasping</div>
+        <div class="pub-venue">RoboCup Symposium 2024</div>
+        <p class="pub-abstract">Investigates optimal robot placement strategies for object grasping tasks, contributing to efficient manipulation in complex real-world robotic scenarios.</p>
+      </div>
+    </div>
+
+    <div class="pub-card fade-in">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title">HortiBot: An Adaptive Multi-Arm System for Robotic Horticulture of Sweet Peppers</div>
+        <div class="pub-venue">IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</div>
+        <p class="pub-abstract">Presents HortiBot, a robotic system for sweet pepper harvesting leveraging multi-arm coordination and real-time panoptic segmentation for perception-guided, collision-aware trajectory generation. Contribution: object detection and segmentation algorithms.</p>
+      </div>
+    </div>
+
+    <div class="pub-card fade-in">
+      <div class="pub-year">2021</div>
+      <div>
+        <div class="pub-title">LovelyBot — The Chatbot Assistant</div>
+        <div class="pub-venue">Lovely Professional University Publication</div>
+        <p class="pub-abstract">Design and implementation of a conversational chatbot assistant with focus on natural language understanding and user experience for customer support applications.</p>
+      </div>
+    </div>
+
+    <div class="pub-card fade-in">
+      <div class="pub-year">2021</div>
+      <div>
+        <div class="pub-title">Comparison of Popular Face Detection and Recognition Techniques</div>
+        <div class="pub-venue">Research Publication</div>
+        <p class="pub-abstract">A comprehensive comparative analysis of modern face detection and recognition algorithms, evaluating accuracy, speed, and computational efficiency across benchmark datasets.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="max-width:1200px;margin:0 auto;">
+  <div class="section-label">05 // Skills</div>
+  <h2 class="section-title">Technical Arsenal</h2>
+  <div class="skills-legend">
+    <div class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span>Computer Vision</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--accent2)"></span>ML / AI</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--accent3)"></span>Robotics / Hardware</div>
+  </div>
+  <div class="skills-cloud">
+    <span class="skill-pill cat-cv">OpenCV</span>
+    <span class="skill-pill cat-cv">Image Processing</span>
+    <span class="skill-pill cat-cv">3D Vision</span>
+    <span class="skill-pill cat-cv">Point Cloud</span>
+    <span class="skill-pill cat-cv">Camera Calibration</span>
+    <span class="skill-pill cat-cv">Feature Extraction</span>
+    <span class="skill-pill cat-cv">Panoptic Segmentation</span>
+    <span class="skill-pill cat-cv">Instance Segmentation</span>
+    <span class="skill-pill cat-cv">Object Detection</span>
+    <span class="skill-pill cat-cv">Thermal Imaging</span>
+    <span class="skill-pill cat-cv">Near Infrared</span>
+    <span class="skill-pill cat-cv">Pattern Recognition</span>
+    <span class="skill-pill cat-ml">PyTorch</span>
+    <span class="skill-pill cat-ml">TensorFlow</span>
+    <span class="skill-pill cat-ml">YOLO</span>
+    <span class="skill-pill cat-ml">CNNs</span>
+    <span class="skill-pill cat-ml">Deep Learning</span>
+    <span class="skill-pill cat-ml">NLP</span>
+    <span class="skill-pill cat-ml">Data Analytics</span>
+    <span class="skill-pill cat-ml">Object Tracking</span>
+    <span class="skill-pill cat-ml">Python</span>
+    <span class="skill-pill cat-ml">Git</span>
+    <span class="skill-pill cat-rob">NVIDIA Jetson</span>
+    <span class="skill-pill cat-rob">Arduino</span>
+    <span class="skill-pill cat-rob">Raspberry Pi</span>
+    <span class="skill-pill cat-rob">Edge Computing</span>
+    <span class="skill-pill cat-rob">AMRs</span>
+    <span class="skill-pill cat-rob">Drone Systems</span>
+    <span class="skill-pill cat-rob">Sensor Fusion</span>
+    <span class="skill-pill cat-rob">LiDAR</span>
+    <span class="skill-pill cat-rob">Laser Range Finder</span>
+    <span class="skill-pill cat-rob">Digital Twin</span>
+    <span class="skill-pill cat-rob">ROS</span>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="max-width:1200px;margin:0 auto;">
+  <div class="section-label">06 // Education</div>
+  <h2 class="section-title">Academic Background</h2>
+  <div class="edu-grid">
+    <div class="edu-card fade-in" data-degree="M">
+      <div class="edu-degree">Master of Technology — Autonomous Systems</div>
+      <div class="edu-school">Bonn-Rhein-Sieg University of Applied Sciences</div>
+      <div class="edu-period">March 2022 — June 2024 · Bonn, Germany</div>
+      <span class="edu-cgpa">CGPA 8.40</span>
+    </div>
+    <div class="edu-card fade-in" data-degree="B">
+      <div class="edu-degree">Bachelor of Technology — Mechatronics &amp; Robotics</div>
+      <div class="edu-school">Lovely Professional University</div>
+      <div class="edu-period">April 2017 — March 2021 · Punjab, India</div>
+      <span class="edu-cgpa">CGPA 8.99</span>
+    </div>
+    <div class="edu-card fade-in" data-degree="H">
+      <div class="edu-degree">Higher Secondary Education (PCM)</div>
+      <div class="edu-school">Christ Central School</div>
+      <div class="edu-period">2015 — 2017 · Kerala, India</div>
+      <span class="edu-cgpa">CGPA 9.34</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">07 // Contact</div>
+  <h2 class="section-title">Let's Build Something</h2>
+  <p class="contact-sub">
+    I'm open to interesting problems in robotics, autonomous systems, and applied AI.<br>
+    Whether it's a full-time role, collaboration, or just a good conversation — reach out.
+  </p>
+  <div class="contact-links">
+    <a href="mailto:melvinpaul123@gmail.com" class="btn btn-primary">✉ melvinpaul123@gmail.com</a>
+    <a href="tel:+919778210876" class="btn btn-outline">📞 +91 9778 210 876</a>
+    <a href="https://www.linkedin.com/in/melvin-pauljacob" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    <a href="https://github.com/melvinpaul123" target="_blank" class="btn btn-outline">GitHub ↗</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Melvin Paul Jacob © 2025</span>
+  <span>Autonomous Systems · Computer Vision · ML Engineering</span>
+  <span>Kerala, India</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  document.addEventListener('mousemove', e => {
+    cursor.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
+    ring.style.transform = `translate(${e.clientX - 18}px, ${e.clientY - 18}px)`;
+  });
+  document.querySelectorAll('a, button, .project-card, .skill-pill').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform += ' scale(2)';
+      cursor.style.background = '#fff';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.background = 'var(--accent)';
+    });
+  });
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate skill bars when about section is visible
+        if (entry.target.closest('#about')) {
+          document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+        }
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in, .timeline-item, .project-card').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Stagger project cards
+  document.querySelectorAll('.project-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 0.1}s`;
+  });
+
+  // Also trigger skill bars if about section already visible on load
+  const aboutObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    }
+  }, { threshold: 0.2 });
+  const aboutSection = document.getElementById('about');
+  if (aboutSection) aboutObs.observe(aboutSection);
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${cur}` ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
