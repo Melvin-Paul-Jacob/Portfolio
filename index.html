@@ -225,6 +225,8 @@
       width: 100%;
       height: auto;
       display: block;
+      border-radius: 10px;
+    
       filter: grayscale(20%) contrast(1.05);
       transition: 0.4s ease;
     }
@@ -259,13 +261,7 @@
     
       overflow: hidden;
       transition: all 0.35s ease;
-    }
-    
-    .profile-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px;
+      will-change: transform;
     }
     
     /* glowing edge */
@@ -318,7 +314,6 @@
       box-shadow:
         0 20px 60px rgba(0,0,0,0.6),
         0 0 40px rgba(0,200,255,0.25);
-      left: 120%;
     }
 
     /* Awards banner */
