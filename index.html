@@ -448,9 +448,17 @@
     .edu-card {
       background: var(--surface); border: 1px solid var(--border);
       padding: 28px; position: relative; overflow: hidden;
-      transition: border-color 0.3s;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-    .edu-card:hover { border-color: var(--border-strong); }
+    .edu-card:hover { 
+      transform: translateY(-6px);
+      box-shadow: 
+        0 14px 32px rgba(0,0,0,0.10);
+        0 6px 14px rgba(201,123,42,0.12);
+      border-color: var(--border-strong);
+      color: var(--accent);
+    }
     .edu-card::before {
       content: attr(data-degree);
       position: absolute; right: -10px; top: 16px;
@@ -459,7 +467,7 @@
     }
     .edu-degree {
       font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 6px; color: var(--accent);
     }
     .edu-school { font-size: 0.78rem; color: var(--accent); margin-bottom: 4px; }
     .edu-period { font-size: 0.7rem; color: var(--muted); margin-bottom: 12px; }
