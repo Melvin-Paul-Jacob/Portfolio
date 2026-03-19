@@ -680,7 +680,31 @@
     .comp-card:hover {
       border-color: var(--border-strong);
       transform: translateY(-6px);
-      box-shadow: var(--glow);
+      box-shadow: 
+        0 12px 28px rgba(0,0,0,0.10),
+        0 4px 12px rgba(201,123,42,0.15),
+        var(--glow);
+    }
+
+    .comp-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.15),
+        transparent
+      );
+    
+      opacity: 0;
+      transition: 0.4s;
+      pointer-events: none;
+    }
+    
+    .comp-card:hover::after {
+      opacity: 1;
     }
     
     /* Featured cards (bigger ones) */
