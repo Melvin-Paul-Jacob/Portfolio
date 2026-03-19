@@ -710,6 +710,14 @@
     .comp-card.featured {
       grid-column: 1 / -1;
     }
+
+    .comp-grid a.featured {
+      grid-column: 1 / -1;
+    }
+    
+    .comp-grid .comp-card.featured {
+      width: 100%;
+    }
     
     @media (max-width: 768px) {
       .comp-card.featured {
@@ -977,7 +985,7 @@
   <div class="comp-grid">
  
     <!-- ★ CARD 1 — ERL 2023 featured (replace src → images/competitions/erl-main.jpg) -->
-    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7110650452047745024/" target="_blank" style="text-decoration: none; color: inherit;">
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7110650452047745024/" target="_blank" style="text-decoration: none; color: inherit;" class="featured">
       <div class="comp-card featured" data-caption="European Robotics League 2023 — 1st Place, Bonn, Germany">
         <div class="comp-img-wrap">
           <img class="comp-img"
@@ -1021,7 +1029,7 @@
     </div>
  
     <!-- ★ CARD 4 — Heart-MET featured (replace src → images/competitions/heartmet-main.jpg) -->
-    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7070265689625784320/" target="_blank" style="text-decoration: none; color: inherit;">
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7070265689625784320/" target="_blank" style="text-decoration: none; color: inherit;" class="featured">
       <div class="comp-card featured" data-caption="Heart-MET Competition ICRA 2023 — 2nd Place">
         <div class="comp-img-wrap">
           <img class="comp-img"
