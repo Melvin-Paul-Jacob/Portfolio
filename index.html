@@ -1,1394 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Melvin Paul Jacob — CV/AI Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root {
-      --bg: #f7f4ef;              /* warm off-white */
-      --surface: #ffffff;        /* cards */
-      --surface2: #f1ebe3;       /* subtle contrast layer */
-      --border: rgba(120, 90, 60, 0.35);
-      --border-strong: rgba(120, 90, 60, 0.55);
-      --accent: #b86a1f;         /* warm amber */
-      --accent2: #b85c38;        /* terracotta */
-      --accent3: #1f1f1f;        /* olive green */
-      --text: #2b2b2b;           /* dark warm gray */
-      --muted: #7a6f63;          /* softer brown-gray */
-      --glow: 0 0 18px rgba(201, 123, 42, 0.25);
-      --skill-1: #3a86ff;  /* refined blue */
-      --skill-2: #c44536;  /* deep terracotta-red */
-      --skill-3: #7b61ff;  /* elegant purple */
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melvin Paul Jacob | Computer Vision & Perception Engineer</title>
+<meta name="description" content="Computer vision, AI and perception engineer building real-time systems for robotics and industry.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  HOW TO ADD IMAGES
+  1. Create an "images" folder next to this file.
+  2. Drop in files with the exact names shown in each dashed box (or edit the src="..." in the HTML).
+  3. Dashed boxes disappear automatically once the image loads.
+*/
+:root{
+  --paper:#F2F5F8; --card:#FFFFFF; --ink:#112033; --muted:#52627a;
+  --navy:#1B3A6B; --teal:#0E7C86; --box:#E0245E; --line:#CFD8E3;
+  --head:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--body)}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--box);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--head);line-height:1.1;letter-spacing:-.01em}
+h2{font-size:2rem;color:var(--navy);margin-bottom:28px}
+h3{font-size:1.2rem}
+section{padding:72px 0;border-top:1px solid var(--line)}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* nav */
+nav{position:sticky;top:0;z-index:5;background:rgba(242,245,248,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:22px;align-items:center;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+nav b{font-family:var(--head);font-size:1.1rem;margin-right:auto;color:var(--navy)}
+nav a{text-decoration:none;color:var(--ink);font-size:.95rem;font-weight:500}
+nav a:hover{color:var(--teal)}
 
-    html { scroll-behavior: smooth; }
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;padding:72px 0}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);font-weight:800;color:var(--navy)}
+.hero .role{font-family:var(--head);font-weight:500;font-size:1.3rem;margin:14px 0 20px}
+.hero p{max-width:52ch;color:var(--muted)}
+.btns{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 20px;border-radius:6px;font-weight:500;text-decoration:none;border:2px solid var(--navy)}
+.btn.main{background:var(--navy);color:#fff}
+.btn.alt{color:var(--navy)}
+.btn:hover{background:var(--teal);border-color:var(--teal);color:#fff}
 
-    body {
-      font-family: 'Space Mono', monospace;
-      background: 
-        radial-gradient(circle at 20% 10%, rgba(201,123,42,0.06), transparent 40%);
-        linear-gradient( 180deg, #f1ebe3 0%, #e7ded2 100% );
-      color: var(--text);
-      overflow-x: hidden;
-    }
+/* detection-box portrait: the one signature element */
+.detect{position:relative;aspect-ratio:4/5;background:var(--line)}
+.detect img{width:100%;height:100%;object-fit:cover;display:block}
+.detect::after{content:"";position:absolute;inset:7% 9% 3% 9%;border:3px solid var(--box);pointer-events:none}
+.detect .tag{position:absolute;left:9%;top:7%;transform:translateY(-100%);background:var(--box);color:#fff;font:500 .85rem/1 var(--body);padding:6px 9px;z-index:2}
 
-    /* Grid background */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image:
-        radial-gradient(rgba(180,140,90,0.08) 1px, transparent 1px);
-      background-size: 32px 32px;
-      pointer-events: none;
-      z-index: 0;
-    }
+/* image slots */
+.shot{position:relative;background:var(--line);overflow:hidden}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.shot figcaption{display:none}
+.shot.missing{border:2px dashed var(--muted);background:repeating-linear-gradient(45deg,#E7ECF2,#E7ECF2 10px,#EEF2F6 10px,#EEF2F6 20px);display:grid;place-items:center;text-align:center;padding:12px}
+.shot.missing img{display:none}
+.shot.missing figcaption{display:block;color:var(--muted);font-size:.85rem}
+.shot.missing figcaption b{display:block;color:var(--ink);font-size:.95rem}
+.detect.missing{display:grid;place-items:center;border:0}
 
-    /* Nav */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 20px 48px;
-      background: rgba(255, 255, 255, 0.75);
-      border-bottom: 1px solid var(--border-strong);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 1.1rem;
-      color: var(--accent);
-      letter-spacing: -0.02em;
-    }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      color: var(--muted); text-decoration: none;
-      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--accent); }
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.facts{list-style:none;padding:0;display:grid;gap:14px}
+.facts li{border-left:4px solid var(--teal);padding-left:14px}
+.facts b{font-family:var(--head);font-size:1.15rem;display:block}
 
-    /* Hero */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 120px 48px 80px;
-      position: relative; z-index: 1;
-    }
-    .hero-tag {
-      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--accent3); margin-bottom: 24px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .hero-tag::before {
-      content: ''; display: block;
-      width: 32px; height: 1px; background: var(--accent3);
-    }
-    .hero-name {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      font-weight: 800; line-height: 0.92;
-      letter-spacing: -0.04em;
-      margin-bottom: 24px;
-    }
-    .hero-name span { color: var(--accent); }
-    .hero-title {
-      font-size: clamp(0.85rem, 2vw, 1.1rem);
-      color: #1f1f1f; max-width: 600px;
-      line-height: 1.8; margin-bottom: 48px;
-    }
-    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-    .btn {
-      padding: 14px 28px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
-      border: none; cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 8px;
-      transition: all 0.25s;
-    }
-    .btn-primary {
-      background: var(--accent); color: #fff;
-    }
-    .btn-primary:hover { background: #a86422; box-shadow: var(--glow); }
-    .btn-outline {
-      background: transparent; color: var(--text);
-     border: 1px solid rgba(180,140,90,0.3);
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+/* experience */
+.job{display:grid;grid-template-columns:200px 1fr;gap:32px;padding:28px 0;border-bottom:1px solid var(--line)}
+.job:last-child{border-bottom:0}
+.job .shot{aspect-ratio:4/3}
+.job .when{color:var(--muted);font-size:.95rem;margin:2px 0 10px}
+.job ul{padding-left:20px;display:grid;gap:6px}
 
-    /* Floating stat cards */
-    .hero-stats {
-      position: absolute; right: 48px; top: 50%;
-      transform: translateY(-50%);
-      display: flex; flex-direction: column; gap: 16px;
-    }
-    .stat-card {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 20px 28px; width: 200px;
-      animation: float 4s ease-in-out infinite;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: all 0.25s ease;
-    }
-    .stat-card:hover {
-      transform: translateY(-4px);
-      box-shadow:
-        0 12px 28px rgba(0,0,0,0.10),
-        0 4px 12px rgba(201,123,42,0.15);
-    }
-    .stat-card:nth-child(2) { animation-delay: 1s; margin-left: 24px; }
-    .stat-card:nth-child(3) { animation-delay: 2s; }
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.5rem; font-weight: 800;
-      color: var(--accent); line-height: 1;
-    }
-    .stat-label { font-size: 0.65rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase; }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+/* projects */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.card .shot{aspect-ratio:16/10}
+.card div{padding:18px 20px 22px}
+.card p{color:var(--muted);font-size:.98rem;margin-top:8px}
+.card .meta{font-size:.85rem;color:var(--teal);font-weight:500;margin-top:12px}
+.card a.more{display:inline-block;margin-top:10px;font-weight:500;font-size:.95rem}
 
-    /* Section base */
-    section {
-      padding: 100px 48px;
-      position: relative; z-index: 1;
-      max-width: 1200px; margin: 0 auto;
-    }
-    .section-label {
-      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 16px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .section-label::after {
-      content: ''; flex: 1; max-width: 60px;
-      height: 1px; background: var(--accent);
-    }
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800; line-height: 1;
-      letter-spacing: -0.03em; margin-bottom: 60px;
-    }
+/* skills */
+.skills{display:grid;gap:20px}
+.skills div{display:grid;grid-template-columns:190px 1fr;gap:20px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.skills h3{font-size:1.05rem;color:var(--navy)}
+.skills p{color:var(--muted);font-size:.98rem}
 
-    /* About */
-    #about .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-    }
-    .about-text p {
-      color: var(--muted); line-height: 1.9; font-size: 0.88rem;
-      margin-bottom: 16px;
-    }
-    .about-text p strong { color: var(--text); }
-    
-    .profile-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 10px;
-    
-      filter: grayscale(20%) contrast(1.05);
-      transition: transform 0.4s ease;
-    }
+/* accolades */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.two ul{padding-left:20px;display:grid;gap:10px}
+.award{display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:center;margin-bottom:18px}
+.award .shot{aspect-ratio:4/3}
 
-    .profile-crystal {
-      position: relative;
-      border-radius: 16px;
-      padding: 0;              /* remove extra space */
-      overflow: hidden; 
-    
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(14px);
-    
-      border: 1px solid rgba(200, 160, 120, 0.25);
-    
-      box-shadow:
-        0 4px 12px rgba(0,0,0,0.05);
-    
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      will-change: transform;
-      max-width: 280px;   /* adjust: 260–360px depending on your layout */
-      height: 280px;
-      margin: 0 auto;
-      
-    }
-    
-    /* glowing edge */
-    .profile-crystal::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-    
-      border-radius: 16px;
-      padding: 1px;
-    
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(0,200,255,0.5),
-        transparent
-      );
-    
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-    
-      pointer-events: none;
-    }
+/* contact */
+.contact{text-align:left}
+.contact p{max-width:52ch;color:var(--muted);margin-bottom:20px}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
 
-    .profile-crystal::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 50%;
-      height: 200%;
-    
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.2),
-        transparent
-      );
-    
-      transform: rotate(25deg);
-      transition: 0.6s;
-    }
-    
-    /* hover effect */
-    .profile-crystal:hover {
-      transform: translateY(-10px) scale(1.03) rotateX(3deg) rotateY(-3deg);
-      box-shadow:
-        0 12px 28px rgba(0,0,0,0.10),
-        0 4px 12px rgba(201,123,42,0.15),
-        var(--glow);
-    }
-    
-    /* image zoom */
-    .profile-crystal:hover .profile-img {
-      transform: scale(1.08);
-    }
-    
-    /* light sweep animation */
-    .profile-crystal:hover::after {
-      left: 120%;
-    }
-
-    /* Awards banner */
-    .awards-strip {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 24px 0;
-      overflow: hidden;
-      position: relative; z-index: 1;
-      margin: 0 0 0 0;
-    }
-    .awards-track {
-      display: flex; gap: 64px;
-      white-space: nowrap;
-      animation: marquee 20s linear infinite;
-    }
-    .award-item {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); flex-shrink: 0;
-    }
-    .award-item .trophy { font-size: 1.1rem; }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    /* Experience timeline */
-    #experience .timeline { position: relative; }
-    .timeline::before {
-      content: ''; position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 1px; background: var(--border-strong);
-    }
-    .timeline-item {
-      padding-left: 40px; margin-bottom: 56px;
-      position: relative;
-      opacity: 0; transform: translateX(-20px);
-      transition: all 0.6s ease;
-    }
-    .timeline-item.visible { opacity: 1; transform: translateX(0); }
-    .timeline-dot {
-      position: absolute; left: -5px; top: 6px;
-      width: 10px; height: 10px;
-      background: var(--bg); border: 2px solid var(--accent);
-      border-radius: 50%;
-    }
-    .timeline-dot.active { background: var(--accent); box-shadow: var(--glow); }
-    .timeline-period {
-      font-size: 0.65rem; color: var(--accent); letter-spacing: 0.15em;
-      text-transform: uppercase; margin-bottom: 8px;
-    }
-    .timeline-company {
-      font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700;
-      margin-bottom: 4px;
-      display: inline-flex;
-      align-items: center;
-    }
-    .timeline-company a {
-      margin-left: 8px;
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: transform 0.2s ease;
-    }
-    
-    .timeline-company a:hover {
-      transform: scale(1.2);
-    }
-    .timeline-role { font-size: 0.8rem; color: #1f1f1f; margin-bottom: 16px; }
-    .timeline-bullets { list-style: none; }
-    .timeline-bullets li {
-      font-size: 0.8rem; color: #1f1f1f; line-height: 1.7;
-      padding-left: 16px; position: relative; margin-bottom: 4px;
-    }
-    .timeline-bullets li::before {
-      content: '›'; position: absolute; left: 0;
-      color: var(--accent);
-    }
-
-    /* Projects */
-    #projects .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      justify-content: center;
-      gap: 24px;
-      align-items: stretch;
-    }
-    .project-card {
-      background: var(--surface); border: 1px solid var(--border);
-      overflow: hidden;
-      transition: all 0.3s ease;
-      opacity: 0; transform: translateY(20px);
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      position: relative;
-    }
-    .project-card.visible { opacity: 1; transform: translateY(0); }
-    .project-card:hover { 
-      border-color: var(--border-strong); 
-      transform: translateY(-6px); 
-       box-shadow:
-        0 12px 28px rgba(0,0,0,0.10),
-        0 4px 12px rgba(201,123,42,0.15),
-        var(--glow);
-      transition: transform 0.3s ease;
-    }
-    .project-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.08),
-        transparent
-      );
-      opacity: 0;
-      transition: 0.3s ease;
-    }
-    
-    .project-card:hover::after {
-      opacity: 1;
-    }
-    .project-img {
-      width: 100%; height: 200px; object-fit: cover;
-      display: block; filter: saturate(0.7) brightness(0.8);
-      transition: filter 0.4s;
-    }
-    .project-card:hover .project-img { filter: saturate(1) brightness(0.95); }
-    .project-body { 
-      padding: 24px; display: flex; flex-direction: column; flex-grow: 1;
-      transform: translateY(-2px);
-      transition: transform 0.3s ease;
-    }
-    .project-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-    .tag {
-      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 3px 10px;
-      border: 1px solid var(--border); color: var(--muted);
-    }
-    .tag.accent { border-color: var(--accent); color: var(--accent); }
-    .tag.green { border-color: var(--accent3); color: var(--accent3); }
-    .project-name {
-      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .project-desc { font-size: 0.78rem; color: #1f1f1f; line-height: 1.7; margin-top: 8px;}
-
-    /* Publications */
-    #publications .pub-list { display: flex; flex-direction: column; gap: 20px; }
-    .pub-card {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 28px; display: grid; grid-template-columns: auto 1fr; gap: 24px;
-      align-items: start;
-      transition: all 0.3s ease; opacity: 0;
-      transform: translateY(20px); position: relative; overflow: hidden;
-    }
-    .pub-card:hover { 
-      border-color: var(--border-strong); 
-      transform: translateY(-6px); 
-      box-shadow:
-      0 12px 28px rgba(0,0,0,0.10),
-      0 4px 12px rgba(201,123,42,0.15),
-      var(--glow); }
-    .pub-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .pub-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.15),
-        transparent
-      );
-      opacity: 0;
-      transition: 0.4s;
-      pointer-events: none;
-    }
-    
-    .pub-card:hover::after {
-      opacity: 1;
-    }
-    .pub-year {
-      font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800;
-      color: var(--accent3); writing-mode: vertical-rl; text-orientation: mixed;
-      transform: rotate(180deg);
-    }
-    .pub-title {
-      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .pub-venue { font-size: 0.72rem; color: var(--accent); margin-bottom: 8px; }
-    .pub-abstract { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
-
-    /* Skills section */
-    #skills .skills-cloud {
-      display: flex; flex-wrap: wrap; gap: 12px;
-    }
-    .skill-pill {
-      padding: 8px 20px;
-      border: 1px solid var(--border);
-      font-size: 0.72rem; letter-spacing: 0.08em;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-    .skill-pill:hover {
-      border-color: var(--accent); color: white;
-      background: rgba(0, 200, 255, 0.07);
-    }
-    .skill-pill.cat-cv { 
-      border-color: var(--skill-1);
-      color: var(--skill-1);
-    }
-    .skill-pill.cat-ml { 
-      border-color: var(--skill-2);
-      color: var(--skill-2);
-    }
-    .skill-pill.cat-rob { 
-      border-color: var(--skill-3);
-      color: var(--skill-3);
-    }
-    .skill-pill.cat-cv:hover { border-color: var(--accent); color: var(--accent); background: var(--skill-1); }
-    .skill-pill.cat-ml:hover { border-color: var(--accent2); color: var(--accent2); background: var(--skill-2); }
-    .skill-pill.cat-rob:hover { border-color: var(--accent3); color: var(--accent3); background: var(--skill-3); }
-    .skills-legend { display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
-    .legend-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      display: inline-block; margin-right: 8px;
-    }
-    .legend-item { font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; }
-
-    /* Education */
-    #education .edu-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    .edu-card {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 28px; position: relative; overflow: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .edu-card:hover { 
-      transform: translateY(-6px);
-      border-color: var(--border-strong);
-      box-shadow: 
-        0 12px 28px rgba(0,0,0,0.10),
-        0 4px 12px rgba(201,123,42,0.15),
-        var(--glow);
-      transition: transform 0.3s ease;
-    }
-    .edu-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.15),
-        transparent
-      );
-      opacity: 0;
-      transition: 0.4s;
-      pointer-events: none;
-    }
-    
-    .edu-card:hover::after {
-      opacity: 1;
-    }
-    .edu-card::before {
-      content: attr(data-degree);
-      position: absolute; right: -10px; top: 16px;
-      font-family: 'Syne', sans-serif; font-size: 5rem; font-weight: 800;
-      color: rgba(0, 200, 255, 0.04); line-height: 1; pointer-events: none;
-    }
-    .edu-degree {
-      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
-      margin-bottom: 6px; color: var(--accent);
-    }
-    .edu-school { font-size: 0.78rem; color: var(--accent); margin-bottom: 4px; }
-    .edu-period { font-size: 0.7rem; color: var(--muted); margin-bottom: 12px; }
-    .edu-cgpa {
-      display: inline-block;
-      padding: 4px 12px;
-      border: 1px solid rgba(0,0,0,0.4); color: #1f1f1f;
-      font-size: 0.68rem; letter-spacing: 0.1em;
-    }
-
-    /* Contact */
-    #contact {
-      text-align: center; max-width: 700px; margin: 0 auto; padding: 100px 48px;
-    }
-    #contact .section-label { justify-content: center; }
-    #contact .section-label::after { display: none; }
-    #contact .section-title { text-align: center; }
-    #contact .contact-sub {
-      color: var(--muted); font-size: 0.85rem; line-height: 1.8;
-      margin-bottom: 48px;
-    }
-    .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 48px;
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em;
-      position: relative; z-index: 1;
-    }
-
-    /* Scroll animations */
-    .fade-in { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    /* Scan line effect */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(0,0,0,0.015) 3px,
-        rgba(0,0,0,0.015) 6px
-      );
-      pointer-events: none; z-index: 999;
-    }
-
-    /* Accent line decoration */
-    .accent-line {
-      width: 60px; height: 3px; background: var(--accent);
-      margin-bottom: 32px;
-      box-shadow: var(--glow);
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
-      #hero { padding: 100px 24px 60px; }
-      .hero-stats { display: none; }
-      section { padding: 70px 24px; }
-      #about .about-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
-      footer { flex-direction: column; gap: 12px; text-align: center; }
-    }
-
-    /* Glitch on hover for name */
-    .hero-name:hover .glitch {
-      animation: glitch 0.4s steps(2) forwards;
-    }
-    @keyframes glitch {
-      0% { text-shadow: 2px 0 var(--accent2), -2px 0 var(--accent3); }
-      33% { text-shadow: -2px 0 var(--accent2), 2px 0 var(--accent3); }
-      66% { text-shadow: 2px 2px var(--accent2), -2px -2px var(--accent3); }
-      100% { text-shadow: none; }
-    }
-
-    /* Tooltip for images */
-    .img-caption {
-      font-size: 0.65rem; color: var(--muted);
-      text-align: center; padding: 8px;
-      background: var(--surface2);
-      letter-spacing: 0.06em;
-    }
-
-    /* COMPETITIONS / WINS */
-    #competitions {
-      max-width: 950px;
-      margin: 0 auto;
-    }
-    
-    .comp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      width: 100%;
-    }
-    
-    .comp-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      position: relative;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s ease;
-    }
-
-    .comp-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .comp-card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-6px);
-      box-shadow: 
-        0 12px 28px rgba(0,0,0,0.10),
-        0 4px 12px rgba(201,123,42,0.15),
-        var(--glow);
-    }
-
-    .comp-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-    
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.15),
-        transparent
-      );
-    
-      opacity: 0;
-      transition: 0.4s;
-      pointer-events: none;
-    }
-    
-    .comp-card:hover::after {
-      opacity: 1;
-    }
-    
-    /* Featured cards (bigger ones) */
-    .comp-grid a.featured {
-      grid-column: span 2;
-    }
-    
-    .comp-grid .comp-card.featured {
-      width: 100%;
-    }
-    
-    @media (max-width: 768px) {
-      .comp-grid {
-        grid-template-columns: 1fr;
-      }
-      .comp-card.featured {
-        grid-column: span 1;
-      }
-    }
-    
-    .comp-img-wrap {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .comp-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      filter: brightness(0.8) saturate(0.8);
-      transition: 0.4s ease;
-    }
-    
-    .comp-card:hover .comp-img {
-      filter: brightness(1) saturate(1);
-      transform: scale(1.05);
-    }
-    
-    .comp-body {
-      padding: 20px;
-    }
-    
-    .comp-event {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    
-    .comp-meta {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-    
-    /* Badge */
-    .comp-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 6px 12px;
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 700;
-      backdrop-filter: blur(6px);
-    }
-    
-    .comp-badge.gold {
-      background: rgba(255, 215, 0, 0.15);
-      border: 1px solid gold;
-      color: gold;
-    }
-    
-    .comp-badge.silver {
-      background: rgba(200, 200, 200, 0.15);
-      border: 1px solid #ccc;
-      color: #ddd;
-    }
-
-    #lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    
-    #lightbox img {
-      max-width: 90%;
-      max-height: 80%;
-    }
-    
-    #lightbox-caption {
-      margin-top: 16px;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    
-    #lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2rem;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
+/* ---------- motion ---------- */
+main.wrap{position:relative;z-index:1}
+#pc{position:absolute;top:0;left:0;width:100%;height:760px;z-index:0;pointer-events:none;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.bar{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:var(--box)}
+nav a.on{color:var(--teal);box-shadow:0 2px 0 var(--teal)}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+@keyframes boxin{from{inset:-6%;opacity:0}}
+@keyframes scan{0%{top:7%;opacity:0}3%{opacity:1}20%{top:97%;opacity:1}23%,100%{top:97%;opacity:0}}
+@keyframes blink{50%{opacity:0}}
+.hero>div>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+.hero>div>:nth-child(2){animation-delay:.12s}
+.hero>div>:nth-child(3){animation-delay:.24s}
+.hero>div>:nth-child(4){animation-delay:.36s}
+.hero .role{min-height:1.6em}
+.caret{display:inline-block;width:2px;height:1.1em;background:var(--box);margin-left:3px;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
+.detect::after{animation:boxin 1s .3s cubic-bezier(.2,.8,.2,1) both}
+.detect::before{content:"";position:absolute;left:9%;right:9%;top:7%;height:3px;z-index:2;opacity:0;background:linear-gradient(90deg,transparent,var(--box),transparent);animation:scan 8s 1.4s ease-in-out infinite}
+.detect .tag{animation:rise .5s .7s both}
+.btn{transition:background .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-2px)}
+h2::after{content:"";display:block;height:4px;width:0;background:var(--box);margin-top:10px;transition:width .8s .3s ease}
+h2.in::after{width:56px}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--line)}
+.stats b{display:block;font:800 clamp(2rem,4.5vw,3rem)/1 var(--head);color:var(--navy)}
+.stats span{display:block;margin-top:8px;color:var(--muted);font-size:.95rem;max-width:22ch}
+.card{transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(17,32,51,.12);border-color:var(--teal)}
+.card .shot img{transition:transform .6s ease}
+.card:hover .shot img{transform:scale(1.06)}
+.card .shot::after{content:"";position:absolute;inset:14%;border:2px solid var(--box);opacity:0;transform:scale(1.2);transition:opacity .3s,transform .4s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.card:hover .shot::after{opacity:1;transform:none}
+.job .shot img{transition:transform .6s ease}
+.job:hover .shot img{transform:scale(1.05)}
+.badge{position:absolute;top:10px;left:10px;z-index:2;background:var(--box);color:#fff;font:500 .8rem/1 var(--body);padding:6px 10px}
+.badge.s{background:#5b6b80}
+#competitions .shot img{cursor:zoom-in}
+#lb{position:fixed;inset:0;background:rgba(10,18,30,.92);z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:92%;max-height:80vh}#lb p{color:#fff}
+@media(max-width:800px){
+  .stats{grid-template-columns:1fr 1fr}
+  .hero,.about,.two{grid-template-columns:1fr;gap:32px}
+  .hero{padding-top:40px}
+  .detect{max-width:360px}
+  .job{grid-template-columns:1fr;gap:16px}
+  .job .shot{max-width:320px}
+  .skills div{grid-template-columns:1fr;gap:4px}
+  section{padding:52px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  h2::after{width:56px}
+}
+</style>
 </head>
 <body>
+<canvas id="pc" aria-hidden="true"></canvas>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">MPJ_</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#competitions">Extracurriculars</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+<nav aria-label="Main"><i class="bar" id="bar"></i><div class="wrap">
+  <b>Melvin Paul Jacob</b>
+  <a href="#about">About</a><a href="#experience">Experience</a><a href="#competitions">Competitions</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#recognition">Recognition</a><a href="#contact">Contact</a>
+</div></nav>
+
+<main class="wrap">
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-tag">AI · Robotics · Computer Vision</div>
-  <h1 class="hero-name">
-    <span class="glitch">Melvin</span><br>
-    Paul<br>
-    <span>Jacob</span>
-  </h1>
-  <p class="hero-title">
-    ML Engineer building perception systems for robots, drones, and autonomous machines.<br>
-    4.5 years turning camera feeds into decisions — from pepper farms to military airspace.
-  </p>
-  <div class="hero-ctas">
-    <a href="mailto:melvinpaul123@gmail.com" class="btn btn-primary">↗ Get in Touch</a>
-    <a href="https://www.linkedin.com/in/melvin-paul-jacob/" target="_blank" class="btn btn-outline">LinkedIn</a>
-    <a href="https://github.com/melvinpaul123" target="_blank" class="btn btn-outline">GitHub</a>
-    <a href="https://github.com/Melvin-Paul-Jacob" target="_blank" class="btn btn-outline">GitHub2</a>
+<header class="hero">
+  <div>
+    <h1>Melvin Paul Jacob</h1>
+    <p class="role"><span id="type">Computer vision, AI and perception engineer</span><i class="caret"></i></p>
+    <p>I build real-time perception systems for robots and industry, from warehouse digital twins to counter-drone tracking and greenhouse harvesting. About five years of work across commercial, industrial and defence settings.</p>
+    <div class="btns">
+      <a class="btn main" href="#projects">See my projects</a>
+      <a class="btn alt" href="#contact">Get in touch</a>
+      <!-- Optional: put your PDF resume at files/Melvin_Paul_Jacob_Resume.pdf, then remove the comment markers around the next line -->
+      <!-- <a class="btn alt" href="files/Melvin_Paul_Jacob_Resume.pdf">Download resume</a> -->
+    </div>
   </div>
+  <figure class="shot detect">
+    <img src="images/1757662096392.png" alt="Portrait of Melvin Paul Jacob" onerror="this.parentElement.classList.add('missing')">
+    <span class="tag">engineer 0.99</span>
+    <figcaption><b>images/1757662096392.png</b>Portrait, about 800 x 1000 px</figcaption>
+  </figure>
+</header>
 
-  <div class="hero-stats">
-    <div class="stat-card">
-      <div class="stat-num">4.5</div>
-      <div class="stat-label">Years of Experience</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">1st</div>
-      <div class="stat-label">European Robotics League</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">2</div>
-      <div class="stat-label">IEEE Publications</div>
-    </div>
-  </div>
-</section>
-
-<!-- AWARDS STRIP -->
-<div class="awards-strip">
-  <div class="awards-track" id="awardsTrack">
-    <span class="award-item"><span class="trophy">🏆</span> 1st Place · European Robotics League 2023</span>
-    <span class="award-item"><span class="trophy">🥈</span> 2nd Place · Heart-MET Competition ICRA 2023</span>
-    <span class="award-item"><span class="trophy">📄</span> IROS 2024 Publication · HortiBot</span>
-    <span class="award-item"><span class="trophy">📄</span> RoboCup Symposium 2024 · Robot Placement</span>
-    <span class="award-item"><span class="trophy">🤖</span> Bit-bots · University of Bonn Robotics Team</span>
-    <span class="award-item"><span class="trophy">🏆</span> 1st Place · European Robotics League 2023</span>
-    <span class="award-item"><span class="trophy">🥈</span> 2nd Place · Heart-MET Competition ICRA 2023</span>
-    <span class="award-item"><span class="trophy">📄</span> IROS 2024 Publication · HortiBot</span>
-    <span class="award-item"><span class="trophy">📄</span> RoboCup Symposium 2024 · Robot Placement</span>
-    <span class="award-item"><span class="trophy">🤖</span> Bit-bots · University of Bonn Robotics Team</span>
-  </div>
+<!-- STATS -->
+<div class="stats">
+  <div><b data-to="5" data-suf="+">0</b><span>years building perception systems</span></div>
+  <div><b data-to="85" data-suf="%+">0</b><span>higher 3D segmentation accuracy</span></div>
+  <div><b data-to="30" data-suf="%">0</b><span>faster inference than baselines</span></div>
+  <div><b data-to="8" data-suf="">0</b><span>engineers led on a counter-UAV system</span></div>
 </div>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-label">01 // About</div>
-  <h2 class="section-title">Who I Am</h2>
-  <div class="about-grid">
-    <div class="about-text fade-in">
-      <p>I'm a <strong>Computer Vision and ML Engineer</strong> with 4.5 years of experience building perception and intelligence systems for real-world robots and autonomous machines.</p>
-      <p>My work spans <strong>commercial, industrial, and military domains</strong> — from training panoptic segmentation models for warehouse digital twins at KION Group, to leading an 8-person team building a counter-drone system for the Indian military at Astr Defence.</p>
-      <p>I hold a <strong>Master's in Autonomous Systems</strong> from Bonn-Rhein-Sieg University of Applied Sciences and have published at <strong>IROS</strong> and <strong>RoboCup Symposium</strong> through research at the University of Bonn.</p>
-      <p>Outside algorithms, I care about robots that work in the <em>real world</em> — messy, ambiguous, uncontrolled environments where clever engineering beats brute compute.</p>
+  <h2>About</h2>
+  <div class="about">
+    <div>
+      <p>I design and deploy perception systems that have to work outside the lab: in dusty warehouses, crowded homes, humid greenhouses and the open sky. My research background (M.Tech in Autonomous Systems, University of Bonn) keeps the models current, and my industry work keeps them shippable.</p>
+      <p style="margin-top:14px">I work with cameras, LiDAR, laser range finders, microphones and 3D cameras, and I lead teams as comfortably as I write code. I care most about robots that work in messy, uncontrolled places, where clever engineering beats brute compute.</p>
     </div>
-    <div class="profile-crystal fade-in">
-      <img src="images/1757662096392.png" alt="Melvin Paul Jacob" class="profile-img">
-    </div>
+    <ul class="facts">
+      <li><b>1st place, European Robotics League 2023</b>With Bit-Bots, on an assistive home robot.</li>
+      <li><b>Published at IROS and RoboCup</b>Robotic horticulture and robot placement for grasping.</li>
+      <li><b>Led a team of 8 engineers</b>On an edge-based counter-UAV system for the Indian military.</li>
+    </ul>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="experience" style="max-width:1200px;margin:0 auto;">
-  <div class="section-label">02 // Experience</div>
-  <h2 class="section-title">Where I've Worked</h2>
-  <div class="timeline">
+<section id="experience">
+  <h2>Experience</h2>
 
-    <div class="timeline-item">
-      <div class="timeline-dot active"></div>
-      <div class="timeline-period">Apr 2025 — Present</div>
-      <div class="timeline-company">KION Group (KION India Pvt. Ltd.)
-        <a href="https://www.kiongroup.com/en/" target="_blank">
-          <i class="fas fa-globe"></i>
-        </a>
-      </div>
-      <div class="timeline-role">AI Engineer · Pune, Maharashtra, India</div>
-      <ul class="timeline-bullets">
-        <li>Designing and developing state-of-the-art 3D panoptic segmentation models for warehouse environments.</li>
-        <li>Building an automated AI pipeline to generate digital twins of warehouses using computer vision.</li>
-        <li>Creating structured, well-documented codebases for seamless integration and deployment.</li>
+  <article class="job">
+    <figure class="shot"><img src="images/exp-kion.jpg" alt="Kion Group work" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/exp-kion.jpg</b>Warehouse / segmentation visual</figcaption></figure>
+    <div>
+      <h3>Artificial Intelligence Engineer, Kion Group</h3>
+      <p class="when">Maharashtra, India · 04/2025 to present</p>
+      <ul>
+        <li>Built a 3D panoptic segmentation pipeline (customised U-Net backbone with semantic and offset heads) for complex warehouses: over 85% higher accuracy and 30% faster inference than baselines, using a fraction of the memory.</li>
+        <li>Developing an automated pipeline that generates digital twins and floor plans of warehouses in Isaac Sim.</li>
+        <li>Leading a synthetic data pipeline that produces images, point clouds, Gaussian splats and other multimodal data.</li>
+        <li>Maintain well-documented code bases that integrate and deploy cleanly.</li>
       </ul>
     </div>
+  </article>
 
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-period">Sep 2024 — Mar 2025</div>
-      <div class="timeline-company">Astr Defence Pvt. Ltd.
-        <a href="https://astrdefence.com/" target="_blank">
-          <i class="fas fa-globe"></i>
-        </a>
-      </div>
-      <div class="timeline-role">Sr. Computer Vision & ML Engineer · Karnataka, India</div>
-      <ul class="timeline-bullets">
-        <li>Led a team of 8 engineers to develop an edge-based defensive system for the Indian military.</li>
-        <li>Designed the complete software stack for 3D localization, detection, tracking, and trajectory prediction of aerial targets.</li>
-        <li>Supervised electronics system development and ensured seamless integration with the software stack.</li>
-        <li>Managed project planning, component procurement, team recruitment and mentoring.</li>
+  <article class="job">
+    <figure class="shot"><img src="images/exp-astr.jpg" alt="Astr Defence work" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/exp-astr.jpg</b>Counter-UAV / team visual</figcaption></figure>
+    <div>
+      <h3>Computer Vision and Machine Learning Engineer, Astr Defence</h3>
+      <p class="when">Karnataka, India · 09/2024 to 03/2025</p>
+      <ul>
+        <li>Led 8 engineers building an edge-based hard-kill counter-UAV system for the Indian military, from system design to deployment.</li>
+        <li>Built the full software stack for 3D localisation, detection, tracking and trajectory prediction of aerial targets.</li>
+        <li>Supervised the electronics system, project planning and component procurement; interviewed, recruited and mentored the team.</li>
       </ul>
     </div>
+  </article>
 
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-period">Jun 2023 — Mar 2024</div>
-      <div class="timeline-company">University of Bonn
-        <a href="https://www.hrl.uni-bonn.de/people/jacob" target="_blank">
-          <i class="fas fa-globe"></i>
-        </a>
-      </div>
-      <div class="timeline-role">ML Research Assistant · Bonn, Germany</div>
-      <ul class="timeline-bullets">
-        <li>Developed and deployed a state-of-the-art object detection algorithm for active perception in horticulture robotics.</li>
-        <li>Implemented and trained semantic, instance and panoptic networks for real-time perception of peppers, peduncles and stems for collision-aware trajectory generation.</li>
-        <li>Co-authored and published results at IEEE/RSJ IROS (International Conference on Intelligent Robots and Systems).</li>
-        <li>Part of the PhenoRob project: sustainable crop production using robotics.</li>
+  <article class="job">
+    <figure class="shot"><img src="images/exp-bonn.jpg" alt="University of Bonn research" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/exp-bonn.jpg</b>Greenhouse / pepper perception visual</figcaption></figure>
+    <div>
+      <h3>Computer Vision and ML Research Assistant, University of Bonn</h3>
+      <p class="when">Bonn, Germany · 06/2023 to 03/2024</p>
+      <ul>
+        <li>Developed and deployed AI models for active perception in horticulture robotics.</li>
+        <li>Trained semantic, instance and panoptic models that find peppers, peduncles and stems in real time, enabling collision-aware manipulation in greenhouses.</li>
       </ul>
     </div>
+  </article>
 
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-period">Sep 2022 — Sep 2023 (Consultant) · Aug 2021 — Feb 2022 (Full-time) · May–Jul 2021 (Intern)</div>
-      <div class="timeline-company">Sastra Robotics India Pvt. Ltd.
-        <a href="https://sastrarobotics.com/" target="_blank">
-          <i class="fas fa-globe"></i>
-        </a>
-      </div>
-      <div class="timeline-role">Computer Vision & ML Engineer · Kerala, India</div>
-      <ul class="timeline-bullets">
-        <li>Implemented highly customizable robot-aided testing solutions using computer vision and deep learning, integrable into any existing testing framework.</li>
-        <li>Created adaptive algorithms for various test scenarios.</li>
-        <li>Key projects: QUACO, EMV Robotic Testing Platform.</li>
+  <article class="job">
+    <figure class="shot"><img src="images/exp-sastra.jpg" alt="Sastra Robotics testing robot" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/exp-sastra.jpg</b>Robotic testing rig visual</figcaption></figure>
+    <div>
+      <h3>Computer Vision and ML Engineer, Sastra Robotics</h3>
+      <p class="when">Kerala, India · 04/2021 to 09/2023 (internship, full-time, then consultant)</p>
+      <ul>
+        <li>Built vision and AI-driven robotic testing for touchscreens, POS terminals and embedded devices, deployable across customer environments with minimal changes.</li>
+        <li>Wrote CV and OCR algorithms that adapt to different test scenarios (QUACO, EMV Robotic Testing Platform).</li>
       </ul>
     </div>
-
-  </div>
+  </article>
 </section>
 
+<!-- COMPETITIONS -->
 <section id="competitions">
-  <div class="section-label">03 // Competitions &amp; Clubs</div>
-  <h2 class="section-title">Highlights</h2>
- 
-  <div class="comp-grid">
- 
-    <!-- ★ CARD 1 — ERL 2023 featured (replace src → images/competitions/erl-main.jpg) -->
-    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7110650452047745024/" target="_blank" style="text-decoration: none; color: inherit;" class="featured">
-      <div class="comp-card featured" data-caption="European Robotics League 2023 — 1st Place, Bonn, Germany">
-        <div class="comp-img-wrap">
-          <img class="comp-img"
-               src="https://media.licdn.com/dms/image/v2/D4E22AQG-tGo-aa_BSw/feedshare-shrink_800/feedshare-shrink_800/0/1695305616497?e=1775692800&v=beta&t=LiOUQHoiIuLD444Yv6CAouQuj_VAE-xUjGfrhvaagMM"
-               alt="European Robotics League 2023 — Team photo" />
-          <div class="comp-badge gold">🏆 1st Place</div>
-        </div>
-        <div class="comp-body">
-          <div class="comp-event">European Robotics League 2023, Milton Keynes, UK</div>
-          <div class="comp-meta">Bit-bots · HBRS University · Bonn, Germany</div>
-        </div>
+  <h2>Competitions and teams</h2>
+  <div class="grid">
+    <article class="card">
+      <figure class="shot"><img src="images/erl-team.jpg" alt="ERL 2023 team photo" onerror="this.parentElement.classList.add('missing')"><span class="badge">1st place</span><figcaption><b>images/erl-team.jpg</b>Team photo</figcaption></figure>
+      <div>
+        <h3>European Robotics League 2023</h3>
+        <p>Bit-bots (Bonn-Rhein-Sieg University) took first place at the ERL 2023 in Milton Keynes, UK.</p>
+        <p class="meta">Bit-bots · Domestic service robots</p>
+        <a class="more" href="https://www.linkedin.com/feed/update/urn:li:activity:7110650452047745024/" target="_blank" rel="noopener">LinkedIn post</a>
       </div>
-    </a>
- 
-    <!-- ★ CARD 2 — ERL 2023 robot in action (replace src → images/competitions/erl-action.jpg) -->
-    <div class="comp-card" data-caption="Episode – Assisting a Person in their Home">
-      <div class="comp-img-wrap">
-        <img class="comp-img"
-             src="images/2023.09-ERL-4-980x441.jpeg"
-             alt="Episode 5 – Assisting a Person in their Home " />
-        <div class="comp-badge gold">🥇 Trophy</div>
+    </article>
+    <article class="card">
+      <figure class="shot"><img src="images/2023.09-ERL-4-980x441.jpeg" alt="ERL episode: assisting a person in their home" onerror="this.parentElement.classList.add('missing')"><span class="badge">ERL 2023</span><figcaption><b>images/2023.09-ERL-4-980x441.jpeg</b>Challenge photo</figcaption></figure>
+      <div>
+        <h3>Assisting a Person in Their Home</h3>
+        <p>A domestic service robot helping a person at home in the ERL indoor challenge.</p>
+        <p class="meta">Domestic service robot · Indoor challenge</p>
       </div>
-      <div class="comp-body">
-        <div class="comp-event">ERL Assisting a Person Challenge</div>
-        <div class="comp-meta">Domestic Service Robot · Indoor Challenge</div>
+    </article>
+    <article class="card">
+      <figure class="shot"><img src="images/SciRoc5.jpg" alt="ERL episode: through the door" onerror="this.parentElement.classList.add('missing')"><span class="badge">ERL 2023</span><figcaption><b>images/SciRoc5.jpg</b>Challenge photo</figcaption></figure>
+      <div>
+        <h3>Through the Door</h3>
+        <p>The robot opens and passes through a hinged door.</p>
+        <p class="meta">Manipulation · Navigation</p>
       </div>
-    </div>
- 
-    <!-- ★ CARD 3 — ERL 2023 award ceremony (replace src → images/competitions/erl-trophy.jpg) -->
-    <div class="comp-card" data-caption="Episode – Through the Door">
-      <div class="comp-img-wrap">
-        <img class="comp-img"
-             src="images/SciRoc5.jpg"
-             alt="ERL Episode 2 – Through the Door " />
-        <div class="comp-badge gold">🥇 Trophy</div>
+    </article>
+    <article class="card">
+      <figure class="shot"><img src="images/heartmet-team.jpg" alt="Heart-MET 2023 team photo" onerror="this.parentElement.classList.add('missing')"><span class="badge s">2nd place</span><figcaption><b>images/heartmet-team.jpg</b>Team photo</figcaption></figure>
+      <div>
+        <h3>ICRA Heart-MET Competition 2023</h3>
+        <p>Second place at the ICRA METRICS Heart-MET competition with Bit-bots.</p>
+        <p class="meta">Bit-bots · Assistive robotics</p>
+        <a class="more" href="https://www.linkedin.com/feed/update/urn:li:activity:7070265689625784320/" target="_blank" rel="noopener">LinkedIn post</a>
       </div>
-      <div class="comp-body">
-        <div class="comp-event">ERL Through the Door Challenge</div>
-        <div class="comp-meta">Robot operating a hinged door</div>
+    </article>
+    <article class="card">
+      <figure class="shot"><img src="images/486814847_1142031281269251_7871193718718558199_n.jpg" alt="Heart-MET human-robot interaction challenge" onerror="this.parentElement.classList.add('missing')"><span class="badge s">Heart-MET</span><figcaption><b>images/486814847_1142031281269251_7871193718718558199_n.jpg</b>Challenge photo</figcaption></figure>
+      <div>
+        <h3>Human-Robot Interaction Challenge</h3>
+        <p>Assistive robotics in domestic environments, with a focus on human-robot interaction.</p>
+        <p class="meta">HRI · Domestic robots</p>
       </div>
-    </div>
- 
-    <!-- ★ CARD 4 — Heart-MET featured (replace src → images/competitions/heartmet-main.jpg) -->
-    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7070265689625784320/" target="_blank" style="text-decoration: none; color: inherit;" class="featured">
-      <div class="comp-card featured" data-caption="Heart-MET Competition ICRA 2023 — 2nd Place">
-        <div class="comp-img-wrap">
-          <img class="comp-img"
-               src="https://media.licdn.com/dms/image/v2/D4E22AQFFQ3_uWEiP_g/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1685638604972?e=1775692800&v=beta&t=x3ND4Tme5CVRc8jeh-9RLGxN_iSlcCF4JusVPHoVyeU"
-               alt="Heart-MET Competition 2023" />
-          <div class="comp-badge silver">🥈 2nd Place</div>
-        </div>
-        <div class="comp-body">
-          <div class="comp-event">ICRA METRICS HEART-MET Competition 2023</div>
-          <div class="comp-meta">Bit-bots · HBRS University · Bonn, Germany</div>
-        </div>
+    </article>
+    <article class="card">
+      <figure class="shot"><img src="images/Screenshot%202026-03-19%20191208.png" alt="Bit-bots physically assistive robot highlights" onerror="this.parentElement.classList.add('missing')"><span class="badge">Highlights</span><figcaption><b>images/Screenshot%202026-03-19%20191208.png</b>Video still</figcaption></figure>
+      <div>
+        <h3>Bit-bots Highlights</h3>
+        <p>Highlights from the physically assistive robot challenge.</p>
+        <p class="meta">Bit-bots · University of Bonn</p>
+        <a class="more" href="https://youtu.be/Jbh13Wwo-v4?t=779" target="_blank" rel="noopener">Watch the video</a>
       </div>
-    </a>
- 
-    <!-- ★ CARD 5 — Heart-MET HRI (replace src → images/competitions/heartmet-robot.jpg) -->
-    <div class="comp-card" data-caption="Heart-MET ICRA 2023 — HRI Challenge">
-      <div class="comp-img-wrap">
-        <img class="comp-img"
-             src="images/486814847_1142031281269251_7871193718718558199_n.jpg"
-             alt="Heart-MET robot interaction" />
-        <div class="comp-badge silver">Heart-MET</div>
-      </div>
-      <div class="comp-body">
-        <div class="comp-event">Heart-MET — HRI Challenge</div>
-        <div class="comp-meta">Assistive robotics in domestic environments</div>
-      </div>
-    </div>
- 
-    <!-- ★ CARD 6 — Bit-bots team (replace src → images/competitions/bitbots-team.jpg) -->
-    <a href="https://youtu.be/Jbh13Wwo-v4?t=779" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="comp-card" data-caption="Bit-bots Team — University of Bonn Robotics">
-        <div class="comp-img-wrap">
-          <img class="comp-img"
-               src="images/Screenshot 2026-03-19 191208.png"
-               alt="Bit-bots team" />
-          <div class="comp-badge silver">Highlight</div>
-        </div>
-        <div class="comp-body">
-          <div class="comp-event">Bit-bots Robotics Team</div>
-          <div class="comp-meta">Physically Assistive Robot Challenge - Highlights</div>
-        </div>
-      </div>
-    </a>
- 
+    </article>
   </div>
 </section>
- 
-<!-- LIGHTBOX -->
-<div id="lightbox">
-  <button id="lightbox-close" onclick="closeLightbox()">×</button>
-  <img id="lightbox-img" src="" alt="" />
-  <div id="lightbox-caption"></div>
-</div>
 
 <!-- PROJECTS -->
-<section id="projects" style="max-width:1200px;margin:0 auto;">
-  <div class="section-label">04 // Projects</div>
-  <h2 class="section-title">Notable Work</h2>
-  <div class="projects-grid">
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="grid">
 
-    <a href="https://www.hrl.uni-bonn.de/research/phenorob" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="project-card">
-        <img class="project-img" src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&q=80" alt="HortiBot" />
-        <div class="img-caption">HortiBot — Robotic Pepper Harvesting</div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag green">Research</span>
-            <span class="tag">Panoptic Seg.</span>
-            <span class="tag">IROS 2024</span>
-          </div>
-          <div class="project-name">HortiBot — Robotic Horticulture</div>
-          <p class="project-desc">Adaptive multi-arm system for robotic sweet pepper harvesting. Trained semantic, instance, and panoptic segmentation networks for real-time detection of peppers, peduncles, and stems. Published at IROS.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-digital-twin.jpg" alt="Warehouse digital twin in Isaac Sim" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-digital-twin.jpg</b>Isaac Sim screenshot</figcaption></figure>
+      <div>
+        <h3>Warehouse Digital Twin and Floor Plans</h3>
+        <p>Automated generation of digital twins and floor plans of real warehouses inside Isaac Sim.</p>
+        <p class="meta">Isaac Sim · Digital twins · 3D vision</p>
+        <a class="more" href="https://www.kiongroup.com/en/News-Stories/KION-Stories/Innovation/Article/How-KION-NavVis-and-NVIDIA-are-Collaborating-on-Industrial-Digital-Twins.html?storyid=61568" target="_blank" rel="noopener">Read about the collaboration</a>
       </div>
-    </a>
+    </article>
 
-    <a href="https://www.kiongroup.com/en/News-Stories/KION-Stories/Innovation/Article/How-KION-NavVis-and-NVIDIA-are-Collaborating-on-Industrial-Digital-Twins.html?storyid=61568" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="project-card">
-        <img class="project-img" src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&q=80" alt="Digital Twin Warehouse" />
-        <div class="img-caption">Warehouse Digital Twin Pipeline</div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag accent">Logistics</span>
-            <span class="tag">3D Vision</span>
-            <span class="tag">Digital Twin</span>
-          </div>
-          <div class="project-name">Automated Warehouse Digital Twin</div>
-          <p class="project-desc">Developing an AI pipeline at KION Group that automatically generates accurate 3D digital twins of warehouse environments using 3D panoptic segmentation from sensor data.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-3d-segmentation.jpg" alt="3D panoptic segmentation result" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-3d-segmentation.jpg</b>Segmented point cloud</figcaption></figure>
+      <div>
+        <h3>3D Panoptic Segmentation</h3>
+        <p>U-Net based model with semantic and offset heads, tuned for cluttered warehouses. Higher accuracy, faster inference, lower memory.</p>
+        <p class="meta">PyTorch · Sparse convolution · Point clouds</p>
       </div>
-    </a>
+    </article>
 
-    <a href="https://github.com/Melvin-Paul-Jacob/PilotNet-Steering" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="project-card">
-        <img class="project-img" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="PilotNet" />
-        <div class="img-caption">PilotNet — Self-Driving Steering Prediction</div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag">CNN</span>
-            <span class="tag">Autonomous Driving</span>
-          </div>
-          <div class="project-name">PilotNet (NVIDIA)</div>
-          <p class="project-desc">Implementation and optimization of NVIDIA's PilotNet CNN for real-time steering angle prediction for self-driving cars, optimized to run on CPU with minimal accuracy loss.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-synthetic-data.jpg" alt="Synthetic data samples" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-synthetic-data.jpg</b>Generated images / splats</figcaption></figure>
+      <div>
+        <h3>Synthetic Data Generation Pipeline</h3>
+        <p>Produces labelled images, point clouds and Gaussian splats so models can train without manual annotation.</p>
+        <p class="meta">Isaac Sim · Multimodal data</p>
       </div>
-    </a>
+    </article>
 
-    <a href="https://github.com/Melvin-Paul-Jacob/Multimodal-Emotion-Aware-Conversational-Agent" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="project-card">
-        <img class="project-img" src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&q=80" alt="Emotion-Aware Agent" />
-        <div class="img-caption">Multimodal Emotion-Aware Conversational Agent</div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag">NLP</span>
-            <span class="tag">HRI</span>
-            <span class="tag green">Research</span>
-          </div>
-          <div class="project-name">Emotion-Aware Conversational Agent</div>
-          <p class="project-desc">Developed empathetic conversational agents examining the impact of emotional intelligence on human-agent interaction, measuring trust, empathy, usefulness, and social presence.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-counter-uav.jpg" alt="Counter-UAV tracking demo" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-counter-uav.jpg</b>Tracking demo frame (non-sensitive)</figcaption></figure>
+      <div>
+        <h3>Edge Counter-UAV System</h3>
+        <p>3D localisation, detection, tracking and trajectory prediction of aerial targets, running on edge hardware.</p>
+        <p class="meta">NVIDIA Jetson · Sensor fusion · LRF</p>
       </div>
-    </a>
+    </article>
 
-    <a href="https://github.com/Melvin-Paul-Jacob/mas_domestic_robotics/tree/heartmet-competition-2022" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="project-card">
-        <img class="project-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80" alt="Assistive Robot" />
-        <div class="img-caption">Socially Acceptable Assistive Humanoid</div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag">Speech Recognition</span>
-            <span class="tag">Navigation</span>
-            <span class="tag">HRI</span>
-          </div>
-          <div class="project-name">Physically Assistive Humanoid Robot</div>
-          <p class="project-desc">A humanoid robot capable of fetching items in home environments using speech & gesture recognition, autonomous navigation, object manipulation, and safe physical human-robot collaboration.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-phenorob.jpg" alt="Robot perceiving sweet peppers" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-phenorob.jpg</b>Pepper perception / HortiBot</figcaption></figure>
+      <div>
+        <h3>PhenoRob and HortiBot</h3>
+        <p>Real-time perception of peppers, peduncles and stems for autonomous harvesting. Published at IROS 2024.</p>
+        <p class="meta">Panoptic segmentation · Active perception</p>
+        <a class="more" href="https://ieeexplore.ieee.org/document/10802082" target="_blank" rel="noopener">Read the paper</a> · <a class="more" href="https://www.hrl.uni-bonn.de/research/phenorob" target="_blank" rel="noopener">PhenoRob</a>
       </div>
-    </a>
+    </article>
 
-    <a href="https://www.linkedin.com/posts/melvin-paul-jacob_opencv-autonomousvehicle-activity-7227326248299999234-RFIN?utm_source=share&utm_medium=member_desktop&rcm=ACoAACe1Qs8BWC1t5XqQUW7176c16aaRRoCA7T4" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="project-card">
-        <img class="project-img" src="images/684c665ea2e0faa91ae2f0ca_SLAM-p-800.jpg" alt="Visual SLAM System" />
-        <div class="img-caption">Visual Odometry</div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag accent">Research</span>
-            <span class="tag">SLAM</span>
-            <span class="tag">Navigation</span>
-          </div>
-          <div class="project-name">Monocular Visual Odometry</div>
-          <p class="project-desc">A way to estimate the location of robots and vehicles without the need for expensive sensors or systems.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-assistive-robot.jpg" alt="Assistive robot fetching an item" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-assistive-robot.jpg</b>Toyota HSR in action</figcaption></figure>
+      <div>
+        <h3>Socially Acceptable Assistive Robot</h3>
+        <p>A humanoid that fetches items at home using speech and gesture recognition, navigation, manipulation and safe handovers.</p>
+        <p class="meta">Toyota HSR · HRI · NLP</p>
+        <a class="more" href="https://github.com/Melvin-Paul-Jacob/mas_domestic_robotics/tree/heartmet-competition-2022" target="_blank" rel="noopener">View on GitHub</a>
       </div>
-    </a>
+    </article>
 
-  </div>
-</section>
-
-<!-- PUBLICATIONS -->
-<section id="publications" style="max-width:1200px;margin:0 auto;">
-  <div class="section-label">05 // Publications</div>
-  <h2 class="section-title">Research Output</h2>
-  <div class="pub-list">
-
-    <a href="https://link.springer.com/chapter/10.1007/978-3-031-85859-8_23" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="pub-card fade-in">
-        <div class="pub-year">2024</div>
-        <div>
-          <div class="pub-title">Planning Robot Placement for Object Grasping</div>
-          <div class="pub-venue">RoboCup Symposium 2024</div>
-          <p class="pub-abstract">Investigates optimal robot placement strategies for object grasping tasks, contributing to efficient manipulation in complex real-world robotic scenarios.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-pilotnet.jpg" alt="PilotNet steering prediction" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-pilotnet.jpg</b>Steering prediction demo</figcaption></figure>
+      <div>
+        <h3>PilotNet</h3>
+        <p>NVIDIA's steering-angle CNN, optimised to run in real time on CPUs with little to no loss in accuracy.</p>
+        <p class="meta">CNN · Self-driving · Optimisation</p>
+        <a class="more" href="https://github.com/Melvin-Paul-Jacob/PilotNet-Steering" target="_blank" rel="noopener">View on GitHub</a>
       </div>
-    </a>
+    </article>
 
-    <a href="https://ieeexplore.ieee.org/document/10802082" target="_blank" style="text-decoration: none; color: inherit;">
-      <div class="pub-card fade-in">
-        <div class="pub-year">2024</div>
-        <div>
-          <div class="pub-title">HortiBot: An Adaptive Multi-Arm System for Robotic Horticulture of Sweet Peppers</div>
-          <div class="pub-venue">IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</div>
-          <p class="pub-abstract">Presents HortiBot, a robotic system for sweet pepper harvesting leveraging multi-arm coordination and real-time panoptic segmentation for perception-guided, collision-aware trajectory generation. Contribution: object detection and segmentation algorithms.</p>
-        </div>
+    <article class="card">
+      <figure class="shot"><img src="images/proj-emotion-agent.jpg" alt="Emotion-aware conversational agent" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-emotion-agent.jpg</b>Interface or study diagram</figcaption></figure>
+      <div>
+        <h3>Emotion-Aware Conversational Agent</h3>
+        <p>A multimodal agent studying how emotional intelligence changes trust, empathy, usefulness and social presence.</p>
+        <p class="meta">Multimodal · HRI · User study</p>
+        <a class="more" href="https://github.com/Melvin-Paul-Jacob/Multimodal-Emotion-Aware-Conversational-Agent" target="_blank" rel="noopener">View on GitHub</a>
       </div>
-    </a>
+    </article>
+
+    <article class="card">
+      <figure class="shot"><img src="images/proj-quaco.jpg" alt="QUACO robotic testing platform" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/proj-quaco.jpg</b>QUACO / EMV test platform</figcaption></figure>
+      <div>
+        <h3>QUACO and EMV Robotic Testing</h3>
+        <p>Robots with CV and OCR that validate touchscreens, payment terminals and embedded devices.</p>
+        <p class="meta">OpenCV · OCR · Robotics</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <figure class="shot"><img src="images/684c665ea2e0faa91ae2f0ca_SLAM-p-800.jpg" alt="Monocular visual odometry" onerror="this.parentElement.classList.add('missing')"><figcaption><b>images/684c665ea2e0faa91ae2f0ca_SLAM-p-800.jpg</b>Visual odometry demo</figcaption></figure>
+      <div>
+        <h3>Monocular Visual Odometry</h3>
+        <p>Estimating the position of robots and vehicles from a single camera, without expensive sensors.</p>
+        <p class="meta">SLAM · Navigation · OpenCV</p>
+        <a class="more" href="https://www.linkedin.com/posts/melvin-paul-jacob_opencv-autonomousvehicle-activity-7227326248299999234-RFIN" target="_blank" rel="noopener">See the post</a>
+      </div>
+    </article>
 
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills" style="max-width:1200px;margin:0 auto;">
-  <div class="section-label">06 // Skills</div>
-  <h2 class="section-title">Technical Arsenal</h2>
-  <div class="skills-legend">
-    <div class="legend-item"><span class="legend-dot" style="background:var(--skill-1)"></span>Computer Vision</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--skill-2)"></span>ML / AI</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--skill-3)"></span>Robotics / Hardware</div>
-  </div>
-  <div class="skills-cloud">
-    <span class="skill-pill cat-cv">OpenCV</span>
-    <span class="skill-pill cat-cv">Image Processing</span>
-    <span class="skill-pill cat-cv">3D Vision</span>
-    <span class="skill-pill cat-cv">Point Cloud</span>
-    <span class="skill-pill cat-cv">Camera Calibration</span>
-    <span class="skill-pill cat-cv">Feature Extraction</span>
-    <span class="skill-pill cat-cv">Panoptic Segmentation</span>
-    <span class="skill-pill cat-cv">Instance Segmentation</span>
-    <span class="skill-pill cat-cv">Object Detection</span>
-    <span class="skill-pill cat-cv">Thermal Imaging</span>
-    <span class="skill-pill cat-cv">Near Infrared</span>
-    <span class="skill-pill cat-cv">Pattern Recognition</span>
-    <span class="skill-pill cat-ml">PyTorch</span>
-    <span class="skill-pill cat-ml">TensorFlow</span>
-    <span class="skill-pill cat-ml">YOLO</span>
-    <span class="skill-pill cat-ml">CNNs</span>
-    <span class="skill-pill cat-ml">Deep Learning</span>
-    <span class="skill-pill cat-ml">NLP</span>
-    <span class="skill-pill cat-ml">Data Analytics</span>
-    <span class="skill-pill cat-ml">Object Tracking</span>
-    <span class="skill-pill cat-ml">Python</span>
-    <span class="skill-pill cat-ml">Git</span>
-    <span class="skill-pill cat-rob">NVIDIA Jetson</span>
-    <span class="skill-pill cat-rob">Arduino</span>
-    <span class="skill-pill cat-rob">Raspberry Pi</span>
-    <span class="skill-pill cat-rob">Edge Computing</span>
-    <span class="skill-pill cat-rob">AMRs</span>
-    <span class="skill-pill cat-rob">Drone Systems</span>
-    <span class="skill-pill cat-rob">Sensor Fusion</span>
-    <span class="skill-pill cat-rob">LiDAR</span>
-    <span class="skill-pill cat-rob">Laser Range Finder</span>
-    <span class="skill-pill cat-rob">Digital Twin</span>
-    <span class="skill-pill cat-rob">ROS</span>
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skills">
+    <div><h3>Computer vision</h3><p>OpenCV, 3D vision, point cloud processing, camera calibration, lens and sensor selection, NIR and thermal imaging, OCR, object tracking, active perception</p></div>
+    <div><h3>Machine learning</h3><p>PyTorch, TensorFlow, Keras, YOLO, CNNs, semantic / instance / panoptic segmentation, object detection, sparse convolution, NLP, transfer learning</p></div>
+    <div><h3>Deployment</h3><p>ONNX, TensorRT, TFLite, quantisation, edge AI, NVIDIA Jetson, Raspberry Pi, Arduino, Docker</p></div>
+    <div><h3>Robotics</h3><p>ROS, AMR, drones and UAVs, sensor fusion, LiDAR, laser range finders, human-robot interaction, digital twins, robotic perception</p></div>
+    <div><h3>Tools</h3><p>Python, Git and GitHub, Isaac Sim, NumPy, Pandas, VS Code, Tkinter</p></div>
+    <div><h3>Leadership</h3><p>Team leadership, project planning, recruiting, mentoring, cross-functional collaboration</p></div>
   </div>
 </section>
 
-<!-- EDUCATION -->
-<section id="education" style="max-width:1200px;margin:0 auto;">
-  <div class="section-label">07 // Education</div>
-  <h2 class="section-title">Academic Background</h2>
-  <div class="edu-grid">
-    <div class="edu-card fade-in" data-degree="M">
-      <div class="edu-degree">Master of Technology — Autonomous Systems</div>
-      <div class="edu-school">Bonn-Rhein-Sieg University of Applied Sciences</div>
-      <div class="edu-period">March 2022 — June 2024 · Bonn, Germany</div>
-      <span class="edu-cgpa">CGPA 8.40</span>
+<!-- RECOGNITION -->
+<section id="recognition">
+  <h2>Recognition</h2>
+  <div class="two">
+    <div>
+      <h3 style="margin-bottom:14px">Awards</h3>
+      <ul><li><b>1st place</b>, European Robotics League 2023</li><li><b>2nd place</b>, ICRA Heart-MET Competition 2023</li></ul>
+      <h3 style="margin:28px 0 12px">Certifications</h3>
+      <ul>
+        <li>Deep Learning and Computer Vision: Object Detection with PyTorch (03/2026)</li>
+        <li>PyTorch Essential Training: Working with Images (06/2025)</li>
+        <li>PyTorch Essential Training: Deep Learning (05/2025)</li>
+        <li>Machine Learning (10/2020)</li>
+      </ul>
     </div>
-    <div class="edu-card fade-in" data-degree="B">
-      <div class="edu-degree">Bachelor of Technology — Mechatronics &amp; Robotics</div>
-      <div class="edu-school">Lovely Professional University</div>
-      <div class="edu-period">April 2017 — March 2021 · Punjab, India</div>
-      <span class="edu-cgpa">CGPA 8.99</span>
-    </div>
-    <div class="edu-card fade-in" data-degree="H">
-      <div class="edu-degree">Higher Secondary Education (PCM)</div>
-      <div class="edu-school">Christ Central School</div>
-      <div class="edu-period">2015 — 2017 · Kerala, India</div>
-      <span class="edu-cgpa">CGPA 9.34</span>
+    <div>
+      <h3 style="margin-bottom:14px">Publications</h3>
+      <ul>
+        <li><a href="https://link.springer.com/chapter/10.1007/978-3-031-85859-8_23" target="_blank" rel="noopener">Planning Robot Placement for Object Grasping</a>, RoboCup Symposium (2024)</li>
+        <li><a href="https://ieeexplore.ieee.org/document/10802082" target="_blank" rel="noopener">HortiBot: An Adaptive Multi-Arm System for Robotic Horticulture of Sweet Peppers</a>, IEEE/RSJ IROS (2024)</li>
+      </ul>
+      <h3 style="margin:28px 0 12px">Education</h3>
+      <ul>
+        <li><b>M.Tech, Autonomous Systems</b><br>Bonn-Rhein-Sieg University of Applied Sciences, Germany · 2022 to 2024 · Grade 2 (German scale)</li>
+        <li><b>B.Tech, Mechatronics</b><br>Lovely Professional University, Punjab · 2017 to 2021 · 8.99 (Indian scale)</li>
+        <li><b>Higher Secondary (PCM)</b><br>Christ Central School, Kerala · 2015 to 2017 · CGPA 9.34</li>
+      </ul>
+      <h3 style="margin:28px 0 12px">Teams</h3>
+      <ul>
+        <li><b>Perception Engineer, Bit-Bots</b> (Bonn, 2022 to 2024): perception and autonomy on Toyota HSR, KUKA and mobile platforms; gesture, voice and NLP interface; European Robotics League and Heart-MET ICRA.</li>
+        <li><b>Co-CEO, Reptilian Robotics</b> (Punjab, 2019 to 2021): autonomous drone, robotic arm and rover platforms; ran CV and ML workshops.</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="section-label">08 // Contact</div>
-  <h2 class="section-title">Let's Build Something</h2>
-  <p class="contact-sub">
-    I'm open to interesting problems in robotics, autonomous systems, and applied AI.<br>
-    Whether it's a full-time role, collaboration, or just a good conversation — reach out.
-  </p>
-  <div class="contact-links">
-    <a href="mailto:melvinpaul123@gmail.com" class="btn btn-primary">✉ melvinpaul123@gmail.com</a>
-    <a href="tel:+919778210876" class="btn btn-outline">📞 +91 9778 210 876</a>
-    <a href="https://www.linkedin.com/in/melvin-pauljacob" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
-    <a href="https://github.com/melvinpaul123" target="_blank" class="btn btn-outline">GitHub ↗</a>
-    <a href="https://github.com/Melvin-Paul-Jacob" target="_blank" class="btn btn-outline">GitHub2 ↗</a>
+<section id="contact" class="contact">
+  <h2>Contact</h2>
+  <p>Open to roles and collaborations in perception, robotics and applied AI. Email is the quickest way to reach me.</p>
+  <div class="btns" style="margin-top:0">
+    <a class="btn main" href="mailto:melvinpauljacob7@gmail.com">melvinpauljacob7@gmail.com</a>
+    <a class="btn alt" href="https://linkedin.com/in/melvin-paul-jacob">LinkedIn</a>
+    <a class="btn alt" href="https://github.com/Melvin-Paul-Jacob">GitHub</a>
+    <a class="btn alt" href="tel:+919778210876">+91 97782 10876</a>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <span>Melvin Paul Jacob © 2025</span>
-  <span>Autonomous Systems · Computer Vision · AI Engineering</span>
-  <span>Kerala, India</span>
-</footer>
+</main>
+
+<footer><div class="wrap">Melvin Paul Jacob · Kerala, India · +91 9778210876</div></footer>
 
 <script>
+(()=>{
+const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
-  // Intersection Observer for animations
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.15 });
+/* scroll progress */
+const bar=$('#bar');
+const prog=()=>{const h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%'};
+addEventListener('scroll',prog,{passive:true});prog();
 
-  document.querySelectorAll('.fade-in, .timeline-item, .project-card, .comp-card').forEach(el => {
-    observer.observe(el);
-  });
+/* detection confidence ticks up */
+const tag=$('.detect .tag');
+const tween=(ms,delay,fn,done)=>{if(calm){fn(1);done&&done();return}
+  setTimeout(()=>{const t0=performance.now();(function f(t){const p=Math.min((t-t0)/ms,1);fn(1-Math.pow(1-p,3));p<1?requestAnimationFrame(f):done&&done()})(t0)},delay)};
+tween(1100,700,e=>tag.textContent='engineer '+(e*0.99).toFixed(2));
 
-  // Stagger project cards
-  document.querySelectorAll('.project-card').forEach((card, i) => {
-    card.style.transitionDelay = `${i * 0.1}s`;
-  });
+/* typing role line */
+if(!calm){
+  const el=$('#type'),ph=['Computer vision engineer','Perception engineer for robots','3D vision and point clouds','Edge AI on NVIDIA Jetson','Computer vision, AI and perception engineer'];
+  let i=4,j=el.textContent.length,del=true;
+  (function tick(){const s=ph[i];j+=del?-1:1;el.textContent=s.slice(0,j);let t=del?30:65;
+    if(!del&&j===s.length){del=true;t=2000}
+    else if(del&&j===0){del=false;i=(i+1)%ph.length;t=250}
+    setTimeout(tick,t)})();
+  setTimeout(()=>{},0);
+}
 
-  // Nav active state
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
-    let cur = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) cur = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === `#${cur}` ? 'var(--accent)' : '';
-    });
-  });
+/* reveal on scroll + count-up */
+const targets=$$('section h2,.about>div:first-child,.facts li,.stats>div,.job,.card,.skills>div,.two>div,.award,.contact p,.contact .btns');
+targets.forEach(el=>{el.classList.add('rv');el.style.setProperty('--d',(([...el.parentNode.children].indexOf(el))%4*0.08)+'s')});
+const count=el=>{const b=el.querySelector('b[data-to]');if(!b)return;const to=+b.dataset.to;
+  tween(1400,0,e=>b.textContent=Math.round(to*e)+b.dataset.suf)};
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;
+  const el=e.target;io.unobserve(el);el.classList.add('in');count(el);
+  if(el.tagName!=='H2')setTimeout(()=>{el.classList.remove('rv','in');el.style.removeProperty('--d')},1200)}),
+  {threshold:.12,rootMargin:'0px 0px -40px 0px'});
+targets.forEach(el=>io.observe(el));
 
-  // Lightbox
-  function openLightbox(src, caption) {
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox-caption').textContent = caption;
-    document.getElementById('lightbox').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+/* active nav link */
+const links=$$('nav a');
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),
+  {rootMargin:'-45% 0px -50% 0px'});
+$$('section[id]').forEach(s=>so.observe(s));
+
+/* lightbox for competition photos */
+const lb=document.createElement('div');lb.id='lb';lb.innerHTML='<img alt=""><p></p>';document.body.appendChild(lb);
+lb.onclick=()=>lb.classList.remove('on');
+addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
+$$('#competitions .shot img').forEach(im=>im.addEventListener('click',()=>{lb.querySelector('img').src=im.src;lb.querySelector('p').textContent=im.alt;lb.classList.add('on')}));
+
+/* point-cloud background (a nod to LiDAR) */
+const c=$('#pc'),x=c.getContext('2d');let W,H,pts=[],m={x:-999,y:-999};
+const size=()=>{const d=devicePixelRatio||1;W=c.clientWidth;H=c.clientHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+  pts=Array.from({length:Math.round(W/16)},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}))};
+const draw=()=>{x.clearRect(0,0,W,H);
+  for(const p of pts){
+    if(!calm){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1}
+    x.fillStyle='rgba(14,124,134,.55)';x.fillRect(p.x,p.y,2.5,2.5);
   }
-  
-  function closeLightbox() {
-    document.getElementById('lightbox').style.display = 'none';
-    document.body.style.overflow = '';
+  for(let a=0;a<pts.length;a++){
+    for(let b=a+1;b<pts.length;b++){const d=Math.hypot(pts[a].x-pts[b].x,pts[a].y-pts[b].y);
+      if(d<110){x.strokeStyle='rgba(27,58,107,'+(.16*(1-d/110))+')';x.beginPath();x.moveTo(pts[a].x,pts[a].y);x.lineTo(pts[b].x,pts[b].y);x.stroke()}}
+    const dm=Math.hypot(pts[a].x-m.x,pts[a].y-m.y);
+    if(dm<150){x.strokeStyle='rgba(224,36,94,'+(.5*(1-dm/150))+')';x.beginPath();x.moveTo(pts[a].x,pts[a].y);x.lineTo(m.x,m.y);x.stroke()}
   }
-  
-  // Close on background click
-  document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target === this) closeLightbox();
-  });
-  
-  // ESC close
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
-  });
-  
-  // Attach to images ONLY
-  document.querySelectorAll('.comp-card img').forEach(img => {
-    img.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const card = img.closest('.comp-card');
-      const caption =
-        card.dataset.caption ||
-        card.querySelector('.comp-event')?.textContent ||
-        '';
-      openLightbox(img.src, caption);
-    });
-  });
+  if(!calm&&scrollY<H&&!document.hidden)requestAnimationFrame(draw);else if(!calm)waiting=true};
+let waiting=false;
+size();draw();
+addEventListener('resize',()=>{size();if(calm)draw()});
+addEventListener('mousemove',e=>{m.x=e.clientX+scrollX;m.y=e.clientY+scrollY},{passive:true});
+addEventListener('scroll',()=>{if(waiting&&scrollY<H&&!calm){waiting=false;draw()}},{passive:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&waiting&&!calm){waiting=false;draw()}});
+})();
 </script>
+
 </body>
 </html>
